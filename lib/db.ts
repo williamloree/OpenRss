@@ -59,7 +59,8 @@ function seedDatabase(database: Database.Database) {
     { name: 'Design', icon: '🎨' },
     { name: 'Développement', icon: '⚙️' },
     { name: 'Crypto', icon: '₿' },
-    { name: 'IA', icon: '🤖' }
+    { name: 'IA', icon: '🤖' },
+    { name: 'Bons Plans', icon: '🎁' }
   ];
 
   const categoryIds: Record<string, number> = {};
@@ -111,6 +112,10 @@ function seedDatabase(database: Database.Database) {
     { category: 'IA', title: 'OpenAI Blog', url: 'https://openai.com/blog/rss/', description: 'Actualités OpenAI', language: 'en' },
     { category: 'IA', title: 'Hugging Face Blog', url: 'https://huggingface.co/blog/feed.xml', description: 'ML et NLP', language: 'en' },
     { category: 'IA', title: 'Google AI Blog', url: 'https://blog.research.google/atom.xml', description: 'Recherche en IA', language: 'en' },
+
+    // Bons Plans
+    { category: 'Bons Plans', title: 'Dealabs', url: 'https://www.dealabs.com/magazine/rss/news', description: 'Bons plans et promotions', language: 'fr' },
+    { category: 'Bons Plans', title: 'Loot Scraper', url: 'https://feed.eikowagenknecht.com/lootscraper.xml', description: 'Jeux gratuits et Epic Games', language: 'en' },
   ];
 
   feeds.forEach(feed => {
