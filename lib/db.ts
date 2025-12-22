@@ -43,12 +43,42 @@ function initializeDatabase(database: Database.Database) {
 
   if (categoriesCount.count === 0) {
     seedDatabase(database);
+  } else {
+    // Run migrations for existing databases
+    runMigrations(database);
   }
+}
+
+function runMigrations(database: Database.Database) {
+  // Add "Bons Plans" category if it doesn't exist
+  const bonsPlansCat = database.prepare('SELECT id FROM categories WHERE name = ?').get('Bons Plans') as { id: number } | undefined;
+
+  let bonsPlansCategoryId: number;
+
+  if (!bonsPlansCat) {
+    const result = database.prepare('INSERT INTO categories (name, icon) VALUES (?, ?)').run('Bons Plans', '🎁');
+    bonsPlansCategoryId = Number(result.lastInsertRowid);
+  } else {
+    bonsPlansCategoryId = bonsPlansCat.id;
+  }
+
+  // Add new feeds if they don't exist
+  const newFeeds = [
+    { categoryId: bonsPlansCategoryId, title: 'Dealabs', url: 'https://www.dealabs.com/magazine/rss/news', description: 'Bons plans et promotions', language: 'fr' },
+    { categoryId: bonsPlansCategoryId, title: 'Loot Scraper', url: 'https://feed.eikowagenknecht.com/lootscraper.xml', description: 'Jeux gratuits et Epic Games', language: 'en' },
+  ];
+
+  const insertFeed = database.prepare('INSERT OR IGNORE INTO feeds_library (category_id, title, url, description, language) VALUES (?, ?, ?, ?, ?)');
+
+  newFeeds.forEach(feed => {
+    insertFeed.run(feed.categoryId, feed.title, feed.url, feed.description, feed.language);
+  });
 }
 
 function seedDatabase(database: Database.Database) {
   const insertCategory = database.prepare('INSERT INTO categories (name, icon) VALUES (?, ?)');
   const insertFeed = database.prepare('INSERT INTO feeds_library (category_id, title, url, description, language) VALUES (?, ?, ?, ?, ?)');
+
 
   // Categories
   const categories = [
