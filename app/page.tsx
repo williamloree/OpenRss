@@ -14,6 +14,7 @@ import Header from "@/components/Header";
 import Card from "@/components/Card";
 import Squares from "@/components/Squares";
 import PatchNotes from "@/components/PatchNotes";
+import Footer from "@/components/Footer";
 
 export default function Page() {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -208,7 +209,7 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative flex flex-col">
       {/* Squares Background */}
       <div className="fixed inset-0 -z-10 h-full w-full bg-white">
         <Squares
@@ -228,7 +229,7 @@ export default function Page() {
         totalPages={totalPages}
         onOpenPatchNotes={openPatchNotes}
       />
-      <main className="container mx-auto px-4 pb-12">
+      <main className="container mx-auto px-4 pb-12 flex-1">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-20">
             <div className="text-sage-900 text-center bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border-2 border-sage-200">
@@ -345,6 +346,9 @@ export default function Page() {
           </>
         )}
       </main>
+
+      {/* Footer */}
+      <Footer />
 
       {/* Patch Notes Modal */}
       <PatchNotes
