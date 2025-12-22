@@ -16,6 +16,7 @@ export interface Article {
   tags: string[];
   content: ArticleContent;
   attachements?: Attachment;
+  feedName?: string;
 }
 
 export interface ArticleContent {

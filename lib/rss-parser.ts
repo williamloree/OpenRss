@@ -132,6 +132,7 @@ function convertRssItemToArticle(
       articleImg: imageUrl,
       creatorAvatar: undefined,
     },
+    feedName: feedTitle,
   };
 }
 
