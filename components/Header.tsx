@@ -23,7 +23,7 @@ const Header = React.memo(
               {/* Logo Section */}
               <div className="flex items-center gap-3">
                 <div className="hidden md:block">
-                  <h1 className="text-xl font-bold text-sage-900">Dechno</h1>
+                  <h1 className="text-xl font-bold text-sage-900">OpenRss</h1>
                   <p className="text-xs text-sage-600">Agrégateur RSS</p>
                 </div>
               </div>

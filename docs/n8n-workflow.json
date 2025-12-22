@@ -9,10 +9,7 @@
       },
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
-      "position": [
-        -2480,
-        -272
-      ],
+      "position": [-2480, -272],
       "id": "13bd4a40-1f4e-4d38-9fe5-82ac4affa93a",
       "name": "Webhook",
       "webhookId": "825ef053-69fa-468d-ba1c-7e642ed95722"
@@ -33,10 +30,7 @@
       "name": "Route to Notion",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
-      "position": [
-        -1952,
-        -464
-      ],
+      "position": [-1952, -464],
       "notes": "Send to Notion if target is 'notion' or 'both'"
     },
     {
@@ -55,10 +49,7 @@
       "name": "Route to Discord",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
-      "position": [
-        -1952,
-        -272
-      ],
+      "position": [-1952, -272],
       "notes": "Send to Discord if target is 'discord' or 'both'"
     },
     {
@@ -78,17 +69,14 @@
           "cachedResultName": "🤫『𝐒𝐞𝐜𝐫𝐞𝐭』",
           "cachedResultUrl": "https://discord.com/channels/1266387029365624924/1426382598388842618"
         },
-        "content": "**Test de webhook Dechno**\n\n✅ Le webhook fonctionne correctement!\n🔔 Ce message est un test et ne sera pas ajouté à Notion.",
+        "content": "**Test de webhook OpenRss**\n\n✅ Le webhook fonctionne correctement!\n🔔 Ce message est un test et ne sera pas ajouté à Notion.",
         "options": {}
       },
       "id": "21e442b3-e606-458f-9ded-e1928586863c",
       "name": "Send Test to Discord Only",
       "type": "n8n-nodes-base.discord",
       "typeVersion": 2,
-      "position": [
-        -1968,
-        176
-      ],
+      "position": [-1968, 176],
       "webhookId": "8dd3be75-9d31-45a9-9019-fd76a8711e73",
       "credentials": {
         "discordBotApi": {
@@ -104,7 +92,7 @@
             {
               "value1": "={{ $json.body.title }}",
               "operation": "notContains",
-              "value2": "Test de webhook Dechno"
+              "value2": "Test de webhook OpenRss"
             }
           ]
         }
@@ -113,10 +101,7 @@
       "name": "Filter Test Messages1",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
-      "position": [
-        -2224,
-        -272
-      ]
+      "position": [-2224, -272]
     },
     {
       "parameters": {
@@ -160,10 +145,7 @@
       "id": "391da34b-a7f5-4fa8-b7b1-362a691c1fe7",
       "name": "Create Notion Page",
       "type": "n8n-nodes-base.notion",
-      "position": [
-        -1664,
-        -480
-      ],
+      "position": [-1664, -480],
       "typeVersion": 2.2,
       "credentials": {
         "notionApi": {
@@ -201,10 +183,7 @@
       },
       "type": "n8n-nodes-base.discord",
       "typeVersion": 2,
-      "position": [
-        -1664,
-        -288
-      ],
+      "position": [-1664, -288],
       "id": "43e2b15b-3cf3-4289-8243-33a749952efd",
       "name": "Send a message",
       "webhookId": "a626a4d6-3fd4-4fb9-abdf-35969619ca41",
@@ -230,10 +209,7 @@
       },
       "name": "Mattermost",
       "type": "n8n-nodes-base.mattermost",
-      "position": [
-        -1664,
-        -96
-      ],
+      "position": [-1664, -96],
       "typeVersion": 1,
       "id": "7ff42d49-876d-47b2-bc75-346c9e38c2fc",
       "credentials": {
@@ -253,10 +229,7 @@
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
-      "position": [
-        -1312,
-        -336
-      ],
+      "position": [-1312, -336],
       "id": "a47e35f6-6568-4def-a436-edb4f2f3e1d7",
       "name": "Publish for community1",
       "credentials": {
@@ -276,10 +249,7 @@
       "name": "Respond to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
-      "position": [
-        -1312,
-        -96
-      ]
+      "position": [-1312, -96]
     },
     {
       "parameters": {
@@ -297,10 +267,7 @@
       "name": "Route to Mattermost",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
-      "position": [
-        -1952,
-        -80
-      ],
+      "position": [-1952, -80],
       "notes": "Send to Discord if target is 'discord' or 'both'"
     }
   ],
