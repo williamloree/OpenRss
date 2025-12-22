@@ -7,8 +7,8 @@ export interface RssFeed {
   addedAt: string;
 }
 
-const STORAGE_KEY = "dechno_rss_feeds";
-const DEFAULT_FEEDS_INITIALIZED_KEY = "dechno_default_feeds_initialized";
+const STORAGE_KEY = "openrss_rss_feeds";
+const DEFAULT_FEEDS_INITIALIZED_KEY = "openrss_default_feeds_initialized";
 
 let listeners: Array<() => void> = [];
 let cachedFeeds: RssFeed[] | null = null;
@@ -45,17 +45,26 @@ function emitChange() {
 
 async function loadDefaultFeedsFromJson(): Promise<RssFeed[]> {
   try {
-    console.log("[loadDefaultFeedsFromJson] Fetching default feeds from JSON...");
-    const response = await fetch('/default-feeds.json');
+    console.log(
+      "[loadDefaultFeedsFromJson] Fetching default feeds from JSON..."
+    );
+    const response = await fetch("/default-feeds.json");
     if (!response.ok) {
       console.error("[loadDefaultFeedsFromJson] Failed to fetch default feeds");
       return [];
     }
     const feeds: RssFeed[] = await response.json();
-    console.log("[loadDefaultFeedsFromJson] Loaded", feeds.length, "default feeds from JSON");
+    console.log(
+      "[loadDefaultFeedsFromJson] Loaded",
+      feeds.length,
+      "default feeds from JSON"
+    );
     return feeds;
   } catch (error) {
-    console.error("[loadDefaultFeedsFromJson] Error loading default feeds:", error);
+    console.error(
+      "[loadDefaultFeedsFromJson] Error loading default feeds:",
+      error
+    );
     return [];
   }
 }
@@ -72,14 +81,21 @@ async function initializeDefaultFeeds(): Promise<void> {
     const isInitialized = localStorage.getItem(DEFAULT_FEEDS_INITIALIZED_KEY);
 
     // Only initialize if we have no feeds and haven't initialized yet
-    if ((!storedFeeds || JSON.parse(storedFeeds).length === 0) && !isInitialized) {
+    if (
+      (!storedFeeds || JSON.parse(storedFeeds).length === 0) &&
+      !isInitialized
+    ) {
       isLoadingDefaultFeeds = true;
       console.log("[initializeDefaultFeeds] Loading default feeds...");
 
       const defaultFeeds = await loadDefaultFeedsFromJson();
 
       if (defaultFeeds.length > 0) {
-        console.log("[initializeDefaultFeeds] Saving", defaultFeeds.length, "default feeds to localStorage");
+        console.log(
+          "[initializeDefaultFeeds] Saving",
+          defaultFeeds.length,
+          "default feeds to localStorage"
+        );
         localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultFeeds));
         localStorage.setItem(DEFAULT_FEEDS_INITIALIZED_KEY, "true");
         cachedFeeds = defaultFeeds;
@@ -110,7 +126,11 @@ function loadFeeds(): RssFeed[] {
 
       // If we have stored feeds and they're not empty, return them
       if (parsed.length > 0) {
-        console.log("[loadFeeds] Returning stored feeds:", parsed.length, "feeds");
+        console.log(
+          "[loadFeeds] Returning stored feeds:",
+          parsed.length,
+          "feeds"
+        );
         return parsed;
       }
     }
@@ -180,18 +200,22 @@ export function useRssFeeds() {
   const exportFeeds = () => {
     const currentFeeds = getSnapshot();
     const dataStr = JSON.stringify(currentFeeds, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const dataBlob = new Blob([dataStr], { type: "application/json" });
     const url = URL.createObjectURL(dataBlob);
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = url;
-    link.download = `dechno-feeds-${new Date().toISOString().split('T')[0]}.json`;
+    link.download = `OpenRss-feeds-${
+      new Date().toISOString().split("T")[0]
+    }.json`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
   };
 
-  const importFeeds = (file: File): Promise<{ success: boolean; message: string; count?: number }> => {
+  const importFeeds = (
+    file: File
+  ): Promise<{ success: boolean; message: string; count?: number }> => {
     return new Promise((resolve) => {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -200,50 +224,70 @@ export function useRssFeeds() {
           const importedFeeds: RssFeed[] = JSON.parse(content);
 
           if (!Array.isArray(importedFeeds)) {
-            resolve({ success: false, message: 'Le fichier JSON doit contenir un tableau de flux' });
+            resolve({
+              success: false,
+              message: "Le fichier JSON doit contenir un tableau de flux",
+            });
             return;
           }
 
           // Validate feed structure
-          const validFeeds = importedFeeds.filter(feed =>
-            feed.url && typeof feed.url === 'string'
+          const validFeeds = importedFeeds.filter(
+            (feed) => feed.url && typeof feed.url === "string"
           );
 
           if (validFeeds.length === 0) {
-            resolve({ success: false, message: 'Aucun flux valide trouvé dans le fichier' });
+            resolve({
+              success: false,
+              message: "Aucun flux valide trouvé dans le fichier",
+            });
             return;
           }
 
           // Merge with existing feeds (avoid duplicates)
           const currentFeeds = getSnapshot();
-          const existingUrls = new Set(currentFeeds.map(f => f.url));
-          const newFeeds = validFeeds.filter(feed => !existingUrls.has(feed.url));
+          const existingUrls = new Set(currentFeeds.map((f) => f.url));
+          const newFeeds = validFeeds.filter(
+            (feed) => !existingUrls.has(feed.url)
+          );
 
           if (newFeeds.length === 0) {
-            resolve({ success: false, message: 'Tous les flux importés existent déjà' });
+            resolve({
+              success: false,
+              message: "Tous les flux importés existent déjà",
+            });
             return;
           }
 
           // Add new feeds
-          const updatedFeeds = [...currentFeeds, ...newFeeds.map(feed => ({
-            ...feed,
-            id: feed.id || Date.now().toString() + Math.random(),
-            title: feed.title || feed.url,
-            addedAt: feed.addedAt || new Date().toISOString()
-          }))];
+          const updatedFeeds = [
+            ...currentFeeds,
+            ...newFeeds.map((feed) => ({
+              ...feed,
+              id: feed.id || Date.now().toString() + Math.random(),
+              title: feed.title || feed.url,
+              addedAt: feed.addedAt || new Date().toISOString(),
+            })),
+          ];
 
           saveFeeds(updatedFeeds);
           resolve({
             success: true,
             message: `${newFeeds.length} flux importé(s) avec succès`,
-            count: newFeeds.length
+            count: newFeeds.length,
           });
         } catch (error) {
-          resolve({ success: false, message: 'Erreur lors de la lecture du fichier JSON' });
+          resolve({
+            success: false,
+            message: "Erreur lors de la lecture du fichier JSON",
+          });
         }
       };
       reader.onerror = () => {
-        resolve({ success: false, message: 'Erreur lors de la lecture du fichier' });
+        resolve({
+          success: false,
+          message: "Erreur lors de la lecture du fichier",
+        });
       };
       reader.readAsText(file);
     });

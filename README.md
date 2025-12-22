@@ -1,4 +1,4 @@
-# Dechno - Agrégateur de flux RSS
+# OpenRss - Agrégateur de flux RSS
 
 Application Next.js moderne pour agréger et afficher des articles provenant de flux RSS avec une interface élégante et intuitive.
 
@@ -27,8 +27,8 @@ Application Next.js moderne pour agréger et afficher des articles provenant de 
 
 ```bash
 # Cloner le repository
-git clone https://github.com/jeancharlescano/dechno.git
-cd dechno
+git clone https://github.com/jeancharlescano/OpenRss.git
+cd OpenRss
 
 # Installer les dépendances
 npm install
@@ -52,7 +52,7 @@ npm start
 ## 📁 Structure du projet
 
 ```txt
-dechno/
+OpenRss/
 ├── app/
 │   ├── api/
 │   │   └── rss/
@@ -141,18 +141,18 @@ curl -X POST http://localhost:3000/api/rss/parse-multiple \
 
 Le projet utilise un thème personnalisé **Sage Green** avec les couleurs suivantes :
 
-| Couleur | Hex | Usage |
-|---------|-----|-------|
-| sage-50 | `#F5F9F1` | Arrière-plans clairs |
-| sage-100 | `#EBF4DD` | Fond principal |
-| sage-200 | `#D7E9BB` | Bordures claires |
-| sage-300 | `#C3DE99` | Bordures moyennes |
-| sage-400 | `#AFD377` | Accents légers |
-| sage-500 | `#90AB8B` | Secondaire |
-| sage-600 | `#5A7863` | Primaire |
-| sage-700 | `#486050` | Primaire foncé |
-| sage-800 | `#36483D` | Texte sombre |
-| sage-900 | `#3B4953` | Texte principal |
+| Couleur  | Hex       | Usage                |
+| -------- | --------- | -------------------- |
+| sage-50  | `#F5F9F1` | Arrière-plans clairs |
+| sage-100 | `#EBF4DD` | Fond principal       |
+| sage-200 | `#D7E9BB` | Bordures claires     |
+| sage-300 | `#C3DE99` | Bordures moyennes    |
+| sage-400 | `#AFD377` | Accents légers       |
+| sage-500 | `#90AB8B` | Secondaire           |
+| sage-600 | `#5A7863` | Primaire             |
+| sage-700 | `#486050` | Primaire foncé       |
+| sage-800 | `#36483D` | Texte sombre         |
+| sage-900 | `#3B4953` | Texte principal      |
 
 ## 🛠️ Technologies
 
@@ -192,8 +192,8 @@ Modifiez les couleurs dans `app/globals.css` :
 
 ```css
 :root {
-  --sage-600: #5A7863; /* Couleur primaire */
-  --sage-100: #EBF4DD; /* Fond principal */
+  --sage-600: #5a7863; /* Couleur primaire */
+  --sage-100: #ebf4dd; /* Fond principal */
   /* ... autres couleurs ... */
 }
 ```
@@ -220,7 +220,7 @@ Les requêtes RSS passent par le serveur Next.js pour éviter les problèmes COR
 
 Le moyen le plus simple de déployer votre application Next.js :
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/jeancharlescano/dechno)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/jeancharlescano/OpenRss)
 
 ### Autres plateformes
 

@@ -10,7 +10,7 @@ export interface AppSettings {
   showMattermostButton: boolean;
 }
 
-const STORAGE_KEY = "dechno_settings";
+const STORAGE_KEY = "openrss_settings";
 
 const DEFAULT_SETTINGS: AppSettings = {
   n8nWebhookUrl: "",
@@ -77,7 +77,11 @@ function saveSettings(settings: AppSettings): void {
 }
 
 export function useSettings() {
-  const settings = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const settings = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot
+  );
 
   const updateSettings = (updates: Partial<AppSettings>) => {
     const currentSettings = getSnapshot();

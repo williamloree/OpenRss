@@ -305,7 +305,7 @@ const Card = ({ article }: { article: Article }) => {
           <img
             alt={article.title}
             src={imageUrl}
-            className="object-cover transition-transform duration-300 group-hover:scale-110 aspect-square w-full h-full"
+            className="object-cover transition-transform duration-300 aspect-square w-full h-full"
           />
         ) : (
           <div className="w-full h-full bg-linear-to-br from-sage-600 via-sage-500 to-sage-700 flex items-center justify-center">
