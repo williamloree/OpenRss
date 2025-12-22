@@ -135,8 +135,9 @@ export default function Page() {
     setCurrentPage(1);
   }, [articles.length]);
 
-  // Refresh AOS when page changes
+  // Scroll to top and refresh AOS when page changes
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     AOS.refresh();
   }, [currentPage]);
 
