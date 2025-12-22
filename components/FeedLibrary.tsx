@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Plus, Check, Search } from "lucide-react";
+import { X, Plus, Check, Search, Trash2 } from "lucide-react";
 import { useRssFeeds } from "@/hooks/useRssFeeds";
 import { FeedLibraryItem } from "@/lib/db";
 
@@ -15,16 +15,20 @@ export default function FeedLibrary({ isOpen, onClose }: FeedLibraryProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [addedFeeds, setAddedFeeds] = useState<Set<string>>(new Set());
-  const { addFeed, feeds } = useRssFeeds();
+  const { addFeed, removeFeed, feeds } = useRssFeeds();
 
+  // Load library when modal opens
   useEffect(() => {
     if (isOpen) {
       loadLibrary();
-      // Mark already added feeds
-      const existingUrls = new Set(feeds.map(f => f.url));
-      setAddedFeeds(existingUrls);
     }
-  }, [isOpen, feeds]);
+  }, [isOpen]);
+
+  // Update added feeds when feeds change
+  useEffect(() => {
+    const existingUrls = new Set(feeds.map(f => f.url));
+    setAddedFeeds(existingUrls);
+  }, [feeds]);
 
   const loadLibrary = async () => {
     try {
@@ -41,9 +45,25 @@ export default function FeedLibrary({ isOpen, onClose }: FeedLibraryProps) {
     }
   };
 
-  const handleAddFeed = (feed: FeedLibraryItem) => {
+  const handleAddFeed = (feed: FeedLibraryItem, event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
     addFeed(feed.url, feed.title);
     setAddedFeeds(prev => new Set(prev).add(feed.url));
+  };
+
+  const handleRemoveFeed = (feedUrl: string, event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const feedToRemove = feeds.find(f => f.url === feedUrl);
+    if (feedToRemove) {
+      removeFeed(feedToRemove.id);
+      setAddedFeeds(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(feedUrl);
+        return newSet;
+      });
+    }
   };
 
   const filterFeeds = (feeds: FeedLibraryItem[]) => {
@@ -157,28 +177,33 @@ export default function FeedLibrary({ isOpen, onClose }: FeedLibraryProps) {
                               </div>
                             </div>
 
-                            <button
-                              onClick={() => !isAdded && handleAddFeed(feed)}
-                              disabled={isAdded}
-                              className={`flex items-center gap-1 px-3 py-2 rounded-lg font-semibold text-sm transition-all whitespace-nowrap ${
-                                isAdded
-                                  ? 'bg-green-100 text-green-700 cursor-not-allowed'
-                                  : 'bg-sage-600 text-white hover:bg-sage-700 hover:shadow-md'
-                              }`}
-                              title={isAdded ? 'Déjà ajouté' : 'Ajouter ce flux'}
-                            >
+                            <div className="flex items-center gap-2">
                               {isAdded ? (
                                 <>
-                                  <Check className="w-4 h-4" />
-                                  Ajouté
+                                  <button
+                                    onClick={(e) => handleRemoveFeed(feed.url, e)}
+                                    className="flex items-center gap-1 px-3 py-2 rounded-lg font-semibold text-sm transition-all whitespace-nowrap bg-red-500 text-white hover:bg-red-600 hover:shadow-md"
+                                    title="Supprimer ce flux"
+                                  >
+                                    <Trash2 className="w-4 h-4" />
+                                    Retirer
+                                  </button>
+                                  <div className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm bg-green-100 text-green-700">
+                                    <Check className="w-4 h-4" />
+                                    Ajouté
+                                  </div>
                                 </>
                               ) : (
-                                <>
+                                <button
+                                  onClick={(e) => handleAddFeed(feed, e)}
+                                  className="flex items-center gap-1 px-3 py-2 rounded-lg font-semibold text-sm transition-all whitespace-nowrap bg-sage-600 text-white hover:bg-sage-700 hover:shadow-md"
+                                  title="Ajouter ce flux"
+                                >
                                   <Plus className="w-4 h-4" />
                                   Ajouter
-                                </>
+                                </button>
                               )}
-                            </button>
+                            </div>
                           </div>
                         </div>
                       );
