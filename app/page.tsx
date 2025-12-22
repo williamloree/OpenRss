@@ -5,6 +5,7 @@ import { Article } from "@/@types/Article";
 import { checkIsUrl } from "@/utils/string";
 import { useRssFeeds } from "@/hooks/useRssFeeds";
 import { useSettings } from "@/hooks/useSettings";
+import { useVersion } from "@/hooks/useVersion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -12,6 +13,7 @@ import "aos/dist/aos.css";
 import Header from "@/components/Header";
 import Card from "@/components/Card";
 import Squares from "@/components/Squares";
+import PatchNotes from "@/components/PatchNotes";
 
 export default function Page() {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -21,6 +23,7 @@ export default function Page() {
   const [currentPage, setCurrentPage] = useState(1);
   const { addFeed, feeds } = useRssFeeds();
   const { settings } = useSettings();
+  const { showPatchNotes, isNewVersion, markVersionAsSeen, openPatchNotes } = useVersion();
 
   // Debug: log feeds when they change
   useEffect(() => {
@@ -223,6 +226,7 @@ export default function Page() {
         loadedFeedInfo={loadedFeedInfo}
         currentPage={currentPage}
         totalPages={totalPages}
+        onOpenPatchNotes={openPatchNotes}
       />
       <main className="container mx-auto px-4 pb-12">
         {isLoading ? (
@@ -341,6 +345,13 @@ export default function Page() {
           </>
         )}
       </main>
+
+      {/* Patch Notes Modal */}
+      <PatchNotes
+        isOpen={showPatchNotes}
+        onClose={markVersionAsSeen}
+        isNewVersion={isNewVersion}
+      />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Bookmark, Settings, Library } from "lucide-react";
+import { Bookmark, Settings, Library, FileText } from "lucide-react";
 import Link from "next/link";
 import Drawer from "./Drawer";
 import FeedLibrary from "./FeedLibrary";
@@ -12,10 +12,11 @@ interface HeaderProps {
   loadedFeedInfo?: string;
   currentPage?: number;
   totalPages?: number;
+  onOpenPatchNotes?: () => void;
 }
 
 const Header = React.memo(
-  ({ onSearch, articleCount, loadedFeedInfo, currentPage, totalPages }: HeaderProps) => {
+  ({ onSearch, articleCount, loadedFeedInfo, currentPage, totalPages, onOpenPatchNotes }: HeaderProps) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isLibraryOpen, setIsLibraryOpen] = useState(false);
 
@@ -73,6 +74,15 @@ const Header = React.memo(
 
               {/* Action Buttons */}
               <div className="flex items-center gap-3">
+                {onOpenPatchNotes && (
+                  <button
+                    onClick={onOpenPatchNotes}
+                    className="p-3 bg-purple-100 text-purple-700 rounded-xl hover:bg-purple-200 transition-all shadow-md hover:shadow-lg"
+                    title="Notes de version"
+                  >
+                    <FileText className="w-5 h-5" />
+                  </button>
+                )}
                 <button
                   onClick={() => setIsLibraryOpen(true)}
                   className="p-3 bg-blue-100 text-blue-700 rounded-xl hover:bg-blue-200 transition-all shadow-md hover:shadow-lg"
