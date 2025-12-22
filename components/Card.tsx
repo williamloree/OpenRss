@@ -154,7 +154,7 @@ const Card = ({ article }: { article: Article }) => {
 
   return (
     <div
-      className="group flex flex-col bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl border-2 border-sage-200 hover:border-sage-500 relative"
+      className="group flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl border-2 border-sage-200 hover:border-sage-500 relative"
       style={{
         transformStyle: 'preserve-3d',
         perspective: '1000px',
