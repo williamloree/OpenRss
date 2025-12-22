@@ -167,7 +167,13 @@ export default function Page() {
         />
       </div>
 
-      <Header onSearch={checkQueryUrl} />
+      <Header
+        onSearch={checkQueryUrl}
+        articleCount={articles.length}
+        loadedFeedInfo={loadedFeedInfo}
+        currentPage={currentPage}
+        totalPages={totalPages}
+      />
       <main className="container mx-auto px-4 pb-12">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-20">
@@ -214,15 +220,6 @@ export default function Page() {
           </div>
         ) : (
           <>
-            <div className="mb-6 text-sage-900 text-center bg-white/60 backdrop-blur-sm rounded-xl p-4 shadow-md border border-sage-200">
-              <p className="text-sm font-medium">
-                {articles.length} article{articles.length > 1 ? "s" : ""} chargé
-                {articles.length > 1 ? "s" : ""}
-                {loadedFeedInfo && ` depuis ${loadedFeedInfo}`}
-                {totalPages > 1 && ` • Page ${currentPage} sur ${totalPages}`}
-              </p>
-            </div>
-
             {/* Articles Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
               {paginatedArticles.map((article, index) => (

@@ -6,8 +6,16 @@ import Link from "next/link";
 import Drawer from "./Drawer";
 import FeedLibrary from "./FeedLibrary";
 
+interface HeaderProps {
+  onSearch: (query: string) => void;
+  articleCount?: number;
+  loadedFeedInfo?: string;
+  currentPage?: number;
+  totalPages?: number;
+}
+
 const Header = React.memo(
-  ({ onSearch }: { onSearch: (query: string) => void }) => {
+  ({ onSearch, articleCount, loadedFeedInfo, currentPage, totalPages }: HeaderProps) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isLibraryOpen, setIsLibraryOpen] = useState(false);
 
@@ -53,6 +61,15 @@ const Header = React.memo(
                   </svg>
                 </div>
               </div>
+
+              {/* Stats Info */}
+              {articleCount !== undefined && articleCount > 0 && (
+                <div className="hidden lg:block text-sm text-sage-700 font-medium bg-sage-50 px-4 py-3 rounded-xl border border-sage-200">
+                  {articleCount} article{articleCount > 1 ? "s" : ""}
+                  {loadedFeedInfo && ` • ${loadedFeedInfo}`}
+                  {totalPages && totalPages > 1 && ` • Page ${currentPage} / ${totalPages}`}
+                </div>
+              )}
 
               {/* Action Buttons */}
               <div className="flex items-center gap-3">
