@@ -111,9 +111,58 @@ export default function Page() {
       if (checkIsUrl(query)) {
         getRssData(query);
       } else {
-        const filtered = allArticles.filter((article) =>
-          article.title.toLowerCase().includes(query.toLowerCase())
-        );
+        const searchQuery = query.toLowerCase();
+        const filtered = allArticles.filter((article) => {
+          // Search in title
+          if (article.title.toLowerCase().includes(searchQuery)) return true;
+
+          // Search in author
+          if (article.author?.toLowerCase().includes(searchQuery)) return true;
+
+          // Search in feed name
+          if (article.feedName?.toLowerCase().includes(searchQuery)) return true;
+
+          // Search in content/summary
+          if (article.content?.summary?.toLowerCase().includes(searchQuery)) return true;
+
+          // Search in date (multiple formats)
+          if (article.pubDate) {
+            const date = new Date(article.pubDate);
+
+            // Format: "5 décembre 2024"
+            const longFormat = date.toLocaleDateString("fr-FR", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            });
+            if (longFormat.toLowerCase().includes(searchQuery)) return true;
+
+            // Format: "5 déc 2024" (short month)
+            const shortFormat = date.toLocaleDateString("fr-FR", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            });
+            if (shortFormat.toLowerCase().includes(searchQuery)) return true;
+
+            // Format: "05/12/2024"
+            const slashFormat = date.toLocaleDateString("fr-FR");
+            if (slashFormat.includes(searchQuery)) return true;
+
+            // Format: "2024-12-05"
+            const isoFormat = date.toISOString().split('T')[0];
+            if (isoFormat.includes(searchQuery)) return true;
+
+            // Format: just day "5" or month "12" or year "2024"
+            const day = date.getDate().toString();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear().toString();
+
+            if (day === searchQuery || month === searchQuery || year === searchQuery) return true;
+          }
+
+          return false;
+        });
         setArticles(filtered);
       }
     },

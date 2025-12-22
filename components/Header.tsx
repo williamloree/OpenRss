@@ -44,7 +44,7 @@ const Header = React.memo(
                     type="text"
                     onChange={(e) => onSearch(e.target.value)}
                     className="w-full px-4 py-3 pl-12 rounded-xl border-2 border-sage-300 focus:border-sage-600 focus:outline-none transition-colors text-sage-900 placeholder-sage-500 bg-sage-50"
-                    placeholder="Rechercher un article ou entrer une URL de flux RSS..."
+                    placeholder="Rechercher par titre, auteur, flux, date ou entrer une URL RSS..."
                   />
                   <svg
                     className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-sage-500"
