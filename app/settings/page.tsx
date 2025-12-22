@@ -3,7 +3,16 @@
 import { useState, useEffect, useRef } from "react";
 import { useSettings } from "@/hooks/useSettings";
 import { useRssFeeds } from "@/hooks/useRssFeeds";
-import { ArrowLeft, Save, RefreshCw, Trash2, Webhook, List, Download, Upload } from "lucide-react";
+import {
+  ArrowLeft,
+  Save,
+  RefreshCw,
+  Trash2,
+  Webhook,
+  List,
+  Download,
+  Upload,
+} from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 
@@ -13,12 +22,23 @@ export default function SettingsPage() {
 
   const [n8nWebhookUrl, setN8nWebhookUrl] = useState(settings.n8nWebhookUrl);
   const [autoSendToN8n, setAutoSendToN8n] = useState(settings.autoSendToN8n);
-  const [articlesPerPage, setArticlesPerPage] = useState(settings.articlesPerPage);
-  const [showNotionButton, setShowNotionButton] = useState(settings.showNotionButton);
-  const [showDiscordButton, setShowDiscordButton] = useState(settings.showDiscordButton);
-  const [showMattermostButton, setShowMattermostButton] = useState(settings.showMattermostButton);
+  const [articlesPerPage, setArticlesPerPage] = useState(
+    settings.articlesPerPage
+  );
+  const [showNotionButton, setShowNotionButton] = useState(
+    settings.showNotionButton
+  );
+  const [showDiscordButton, setShowDiscordButton] = useState(
+    settings.showDiscordButton
+  );
+  const [showMattermostButton, setShowMattermostButton] = useState(
+    settings.showMattermostButton
+  );
   const [showClearConfirm, setShowClearConfirm] = useState(false);
-  const [importMessage, setImportMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [importMessage, setImportMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -39,12 +59,12 @@ export default function SettingsPage() {
       showDiscordButton,
       showMattermostButton,
     });
-    toast.success("Paramètres sauvegardés avec succès !")
+    toast.success("Paramètres sauvegardés avec succès !");
   };
 
   const handleReset = () => {
     resetSettings();
-    toast.success("Paramètres sauvegardés avec succès !")
+    toast.success("Paramètres sauvegardés avec succès !");
   };
 
   const handleClearFeeds = () => {
@@ -64,11 +84,14 @@ export default function SettingsPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           article: {
-            title: "Test de webhook Dechno",
-            link: "https://dechno.app/test",
-            author: "Dechno App",
+            title: "Test de webhook OpenRss",
+            link: "https://OpenRss.app/test",
+            author: "OpenRss App",
             pubDate: new Date().toISOString(),
-            content: { summary: "Ceci est un message de test pour vérifier que votre webhook n8n fonctionne correctement." },
+            content: {
+              summary:
+                "Ceci est un message de test pour vérifier que votre webhook n8n fonctionne correctement.",
+            },
             attachements: {},
             enclosure: {},
             guid: `test-${Date.now()}`,
@@ -97,14 +120,14 @@ export default function SettingsPage() {
 
     const result = await importFeeds(file);
     setImportMessage({
-      type: result.success ? 'success' : 'error',
-      text: result.message
+      type: result.success ? "success" : "error",
+      text: result.message,
     });
 
     setTimeout(() => setImportMessage(null), 5000);
 
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+      fileInputRef.current.value = "";
     }
   };
 
@@ -127,14 +150,15 @@ export default function SettingsPage() {
             </Link>
             <div>
               <h1 className="text-2xl font-bold text-sage-900">Paramètres</h1>
-              <p className="text-sm text-sage-600">Configurez votre application</p>
+              <p className="text-sm text-sage-600">
+                Configurez votre application
+              </p>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 pb-12 max-w-4xl">
-
+      <main className="container mx-auto px-4 pb-12">
         {/* n8n Webhook Section */}
         <section className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-2 border-sage-200">
           <div className="flex items-center gap-3 mb-4">
@@ -155,11 +179,12 @@ export default function SettingsPage() {
                 className="w-full px-4 py-3 border-2 border-sage-300 rounded-xl focus:border-sage-600 focus:outline-none transition-colors"
               />
               <p className="mt-2 text-sm text-sage-600">
-                L&apos;URL du webhook n8n pour envoyer les articles vers Notion et Discord
+                L&apos;URL du webhook n8n pour envoyer les articles vers Notion
+                et Discord
               </p>
             </div>
 
-            <div className="flex items-center gap-3">
+            {/* <div className="flex items-center gap-3">
               <input
                 type="checkbox"
                 id="autoSend"
@@ -167,10 +192,13 @@ export default function SettingsPage() {
                 onChange={(e) => setAutoSendToN8n(e.target.checked)}
                 className="w-5 h-5 text-sage-600 border-2 border-sage-300 rounded focus:ring-sage-500"
               />
-              <label htmlFor="autoSend" className="text-sm font-medium text-sage-700">
+              <label
+                htmlFor="autoSend"
+                className="text-sm font-medium text-sage-700"
+              >
                 Envoyer automatiquement tous les nouveaux articles vers n8n
               </label>
-            </div>
+            </div> */}
 
             <button
               onClick={testWebhook}
@@ -213,7 +241,9 @@ export default function SettingsPage() {
                 {/* Notion Toggle */}
                 <div className="flex items-center justify-between p-3 bg-sage-50 rounded-lg">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-sage-700">Bouton Notion</span>
+                    <span className="text-sm font-medium text-sage-700">
+                      Bouton Notion
+                    </span>
                   </div>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
@@ -222,14 +252,16 @@ export default function SettingsPage() {
                       onChange={(e) => setShowNotionButton(e.target.checked)}
                       className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-sage-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sage-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top--0.5 after:left--0.5 after:bg-white after:border-sage-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sage-600"></div>
+                    <div className="w-11 h-6 bg-sage-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sage-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-0.5 after:start-[2px] rtl:after:start-auto rtl:after:end-[2px] after:bg-white after:border-sage-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sage-600"></div>
                   </label>
                 </div>
 
                 {/* Discord Toggle */}
                 <div className="flex items-center justify-between p-3 bg-sage-50 rounded-lg">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-sage-700">Bouton Discord</span>
+                    <span className="text-sm font-medium text-sage-700">
+                      Bouton Discord
+                    </span>
                   </div>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
@@ -238,28 +270,33 @@ export default function SettingsPage() {
                       onChange={(e) => setShowDiscordButton(e.target.checked)}
                       className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-sage-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sage-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top--0.5 after:left--0.5 after:bg-white after:border-sage-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+                    <div className="w-11 h-6 bg-sage-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sage-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-0.5 after:start-[2px] rtl:after:start-auto rtl:after:end-[2px] after:bg-white after:border-sage-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
                   </label>
                 </div>
 
                 {/* Mattermost Toggle */}
                 <div className="flex items-center justify-between p-3 bg-sage-50 rounded-lg">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-sage-700">Bouton Mattermost</span>
+                    <span className="text-sm font-medium text-sage-700">
+                      Bouton Mattermost
+                    </span>
                   </div>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
                       checked={showMattermostButton}
-                      onChange={(e) => setShowMattermostButton(e.target.checked)}
+                      onChange={(e) =>
+                        setShowMattermostButton(e.target.checked)
+                      }
                       className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-sage-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sage-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top--0.5 after:left--0.5 after:bg-white after:border-sage-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                    <div className="w-11 h-6 bg-sage-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sage-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-0.5 after:start-0.5 rtl:after:start-auto rtl:after:end-0.5 after:bg-white after:border-sage-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
                   </label>
                 </div>
               </div>
               <p className="mt-3 text-xs text-sage-600">
-                Contrôlez quels boutons d&apos;envoi apparaissent sur les cartes d&apos;articles
+                Contrôlez quels boutons d&apos;envoi apparaissent sur les cartes
+                d&apos;articles
               </p>
             </div>
           </div>
@@ -269,7 +306,9 @@ export default function SettingsPage() {
         <section className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-2 border-sage-200">
           <div className="flex items-center gap-3 mb-4">
             <Trash2 className="w-6 h-6 text-sage-700" />
-            <h2 className="text-xl font-bold text-sage-900">Gestion des données</h2>
+            <h2 className="text-xl font-bold text-sage-900">
+              Gestion des données
+            </h2>
           </div>
 
           <div className="space-y-4">
@@ -283,11 +322,13 @@ export default function SettingsPage() {
               </p>
 
               {importMessage && (
-                <div className={`mb-3 p-3 rounded-lg ${
-                  importMessage.type === 'success'
-                    ? 'bg-green-100 border border-green-500 text-green-800'
-                    : 'bg-red-100 border border-red-500 text-red-800'
-                }`}>
+                <div
+                  className={`mb-3 p-3 rounded-lg ${
+                    importMessage.type === "success"
+                      ? "bg-green-100 border border-green-500 text-green-800"
+                      : "bg-red-100 border border-red-500 text-red-800"
+                  }`}
+                >
                   <p className="text-sm font-medium">{importMessage.text}</p>
                 </div>
               )}

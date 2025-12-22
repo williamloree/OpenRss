@@ -1,15 +1,15 @@
 services:
-  dechno:
-    image: registry.williamloree.fr/dechno:latest
-    container_name: dechno-app
+  openrss:
+    image: registry.williamloree.fr/openrss:latest
+    container_name: openrss-app
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=production
     restart: unless-stopped
     networks:
-      - dechno-network
+      - openrss-network
 
 networks:
-  dechno-network:
+  openrss-network:
     driver: bridge
