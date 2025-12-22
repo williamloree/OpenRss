@@ -312,6 +312,15 @@ const Card = ({ article }: { article: Article }) => {
             <span className="text-6xl text-white/80">📰</span>
           </div>
         )}
+
+        {/* Feed Name Badge - positioned on image */}
+        {article.feedName && (
+          <div className="absolute top-3 left-3 z-10">
+            <span className="inline-flex items-center px-3 py-1.5 text-xs font-semibold bg-white/95 text-sage-900 rounded-full shadow-lg backdrop-blur-sm border border-sage-200">
+              {article.feedName}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Content Section */}
