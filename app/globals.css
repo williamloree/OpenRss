@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+:root {
+  --background: #EBF4DD;
+  --foreground: #3B4953;
+
+  /* Palette personnalisée */
+  --sage-50: #F5F9F1;
+  --sage-100: #EBF4DD;
+  --sage-200: #D7E9BB;
+  --sage-300: #C3DE99;
+  --sage-400: #AFD377;
+  --sage-500: #90AB8B;
+  --sage-600: #5A7863;
+  --sage-700: #486050;
+  --sage-800: #36483D;
+  --sage-900: #3B4953;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Couleurs personnalisées */
+  --color-sage-50: var(--sage-50);
+  --color-sage-100: var(--sage-100);
+  --color-sage-200: var(--sage-200);
+  --color-sage-300: var(--sage-300);
+  --color-sage-400: var(--sage-400);
+  --color-sage-500: var(--sage-500);
+  --color-sage-600: var(--sage-600);
+  --color-sage-700: var(--sage-700);
+  --color-sage-800: var(--sage-800);
+  --color-sage-900: var(--sage-900);
+
+  --color-primary: var(--sage-600);
+  --color-secondary: var(--sage-500);
+  --color-accent: var(--sage-700);
+  --color-dark: var(--sage-900);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}

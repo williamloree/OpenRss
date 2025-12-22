@@ -1,0 +1,15 @@
+services:
+  dechno:
+    image: registry.williamloree.fr/dechno:latest
+    container_name: dechno-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - dechno-network
+
+networks:
+  dechno-network:
+    driver: bridge

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "default-1",
+    "url": "https://www.lemonde.fr/rss/une.xml",
+    "title": "Le Monde - Actualités",
+    "addedAt": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "default-2",
+    "url": "https://www.numerama.com/feed/",
+    "title": "Numerama - Tech",
+    "addedAt": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "default-3",
+    "url": "https://korben.info/feed",
+    "title": "Korben - Tech & Geek",
+    "addedAt": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "default-4",
+    "url": "https://www.01net.com/rss/info/",
+    "title": "01net - Actualités Tech",
+    "addedAt": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "default-5",
+    "url": "https://www.futura-sciences.com/rss/actualites.xml",
+    "title": "Futura Sciences",
+    "addedAt": "2024-01-01T00:00:00.000Z"
+  }
+]
