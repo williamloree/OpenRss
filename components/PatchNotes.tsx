@@ -15,32 +15,36 @@ const changeTypeConfig = {
     label: "Nouveau",
     color: "text-blue-600",
     bgColor: "bg-blue-50",
-    borderColor: "border-blue-200"
+    borderColor: "border-blue-200",
   },
   improvement: {
     icon: Wrench,
     label: "Amélioration",
     color: "text-green-600",
     bgColor: "bg-green-50",
-    borderColor: "border-green-200"
+    borderColor: "border-green-200",
   },
   fix: {
     icon: Bug,
     label: "Correction",
     color: "text-orange-600",
     bgColor: "bg-orange-50",
-    borderColor: "border-orange-200"
+    borderColor: "border-orange-200",
   },
   breaking: {
     icon: AlertTriangle,
     label: "Breaking Change",
     color: "text-red-600",
     bgColor: "bg-red-50",
-    borderColor: "border-red-200"
-  }
+    borderColor: "border-red-200",
+  },
 };
 
-export default function PatchNotes({ isOpen, onClose, isNewVersion = false }: PatchNotesProps) {
+export default function PatchNotes({
+  isOpen,
+  onClose,
+  isNewVersion = false,
+}: PatchNotesProps) {
   if (!isOpen) return null;
 
   const latestPatchNote = patchNotes[0];
@@ -54,9 +58,9 @@ export default function PatchNotes({ isOpen, onClose, isNewVersion = false }: Pa
       />
 
       {/* Modal */}
-      <div className="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
+      <div className="relative bg-background rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
         {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-sage-600 to-sage-700 text-white p-6 border-b border-sage-500">
+        <div className="sticky top-0 bg-primary text-primary-foreground p-6 border-b border-border">
           <div className="flex items-start justify-between">
             <div>
               {isNewVersion && (
@@ -67,10 +71,11 @@ export default function PatchNotes({ isOpen, onClose, isNewVersion = false }: Pa
               )}
               <h2 className="text-2xl font-bold mb-1">Notes de version</h2>
               <p className="text-sage-100 text-sm">
-                Version {latestPatchNote.version} • {new Date(latestPatchNote.date).toLocaleDateString("fr-FR", {
+                Version {latestPatchNote.version} •{" "}
+                {new Date(latestPatchNote.date).toLocaleDateString("fr-FR", {
                   day: "numeric",
                   month: "long",
-                  year: "numeric"
+                  year: "numeric",
                 })}
               </p>
             </div>
@@ -89,18 +94,18 @@ export default function PatchNotes({ isOpen, onClose, isNewVersion = false }: Pa
           {patchNotes.map((note, noteIndex) => (
             <div
               key={note.version}
-              className={`p-6 ${noteIndex > 0 ? 'border-t border-sage-200' : ''}`}
+              className={`p-6 ${noteIndex > 0 ? "border-t border-border" : ""}`}
             >
               {noteIndex > 0 && (
                 <div className="mb-4">
-                  <h3 className="text-lg font-bold text-sage-900 mb-1">
+                  <h3 className="text-lg font-bold mb-1">
                     Version {note.version}
                   </h3>
-                  <p className="text-sm text-sage-600">
+                  <p className="text-sm text-primary">
                     {new Date(note.date).toLocaleDateString("fr-FR", {
                       day: "numeric",
                       month: "long",
-                      year: "numeric"
+                      year: "numeric",
                     })}
                   </p>
                 </div>
@@ -120,7 +125,9 @@ export default function PatchNotes({ isOpen, onClose, isNewVersion = false }: Pa
                         <Icon className="w-5 h-5" />
                       </div>
                       <div className="flex-1">
-                        <div className={`text-xs font-semibold mb-1 ${config.color}`}>
+                        <div
+                          className={`text-xs font-semibold mb-1 ${config.color}`}
+                        >
                           {config.label}
                         </div>
                         <p className="text-sm text-sage-800 leading-relaxed">
@@ -136,13 +143,13 @@ export default function PatchNotes({ isOpen, onClose, isNewVersion = false }: Pa
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-sage-50 border-t border-sage-200 p-4 flex justify-between items-center">
-          <p className="text-sm text-sage-600">
+        <div className="sticky bottom-0 bg-background border-t border-border p-4 flex justify-between items-center">
+          <p className="text-sm text-primary">
             Merci d&apos;utiliser OpenRss ! 🎉
           </p>
           <button
             onClick={onClose}
-            className="px-6 py-2 bg-sage-600 text-white rounded-lg font-semibold hover:bg-sage-700 transition-all shadow-md hover:shadow-lg"
+            className="px-6 cursor-pointer py-2 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-sage-700 transition-all shadow-md hover:shadow-lg"
           >
             Fermer
           </button>

@@ -24,7 +24,8 @@ export default function Page() {
   const [currentPage, setCurrentPage] = useState(1);
   const { addFeed, feeds } = useRssFeeds();
   const { settings } = useSettings();
-  const { showPatchNotes, isNewVersion, markVersionAsSeen, openPatchNotes } = useVersion();
+  const { showPatchNotes, isNewVersion, markVersionAsSeen, openPatchNotes } =
+    useVersion();
 
   // Debug: log feeds when they change
   useEffect(() => {
@@ -124,10 +125,12 @@ export default function Page() {
           if (article.author?.toLowerCase().includes(searchQuery)) return true;
 
           // Search in feed name
-          if (article.feedName?.toLowerCase().includes(searchQuery)) return true;
+          if (article.feedName?.toLowerCase().includes(searchQuery))
+            return true;
 
           // Search in content/summary
-          if (article.content?.summary?.toLowerCase().includes(searchQuery)) return true;
+          if (article.content?.summary?.toLowerCase().includes(searchQuery))
+            return true;
 
           // Search in date (multiple formats)
           if (article.pubDate) {
@@ -154,15 +157,20 @@ export default function Page() {
             if (slashFormat.includes(searchQuery)) return true;
 
             // Format: "2024-12-05"
-            const isoFormat = date.toISOString().split('T')[0];
+            const isoFormat = date.toISOString().split("T")[0];
             if (isoFormat.includes(searchQuery)) return true;
 
             // Format: just day "5" or month "12" or year "2024"
             const day = date.getDate().toString();
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, "0");
             const year = date.getFullYear().toString();
 
-            if (day === searchQuery || month === searchQuery || year === searchQuery) return true;
+            if (
+              day === searchQuery ||
+              month === searchQuery ||
+              year === searchQuery
+            )
+              return true;
           }
 
           return false;
@@ -190,7 +198,7 @@ export default function Page() {
 
   // Scroll to top and refresh AOS when page changes
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
     AOS.refresh();
   }, [currentPage]);
 
@@ -211,11 +219,11 @@ export default function Page() {
   return (
     <div className="min-h-screen relative flex flex-col">
       {/* Squares Background */}
-      <div className="fixed inset-0 -z-10 h-full w-full bg-white">
+      <div className="fixed inset-0 -z-10 h-full w-full bg-background">
         <Squares
           direction="diagonal"
           speed={0.5}
-          borderColor="#e5e5e5"
+          borderColor="#6B72801A"
           squareSize={64}
           hoverFillColor="rgba(198, 246, 213, 0.3)"
         />
@@ -234,7 +242,9 @@ export default function Page() {
           <div className="flex flex-col items-center justify-center py-20">
             <div className="text-sage-900 text-center bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border-2 border-sage-200">
               <div className="w-16 h-16 mx-auto mb-6 border-4 border-sage-300 border-t-sage-600 rounded-full animate-spin"></div>
-              <h2 className="text-2xl font-bold mb-2">Chargement des articles...</h2>
+              <h2 className="text-2xl font-bold mb-2">
+                Chargement des articles...
+              </h2>
               <p className="text-sage-700">
                 {feeds.length > 0
                   ? `Récupération de ${feeds.length} flux RSS`
@@ -258,13 +268,17 @@ export default function Page() {
                   d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
                 />
               </svg>
-              <h2 className="text-2xl font-bold mb-2">Aucun article à afficher</h2>
+              <h2 className="text-2xl font-bold mb-2">
+                Aucun article à afficher
+              </h2>
               <p className="text-sage-700 mb-4">
                 Recherchez un article ou entrez une URL de flux RSS
               </p>
               <button
                 onClick={() => {
-                  const drawer = document.querySelector('[title="Mes flux RSS"]');
+                  const drawer = document.querySelector(
+                    '[title="Mes flux RSS"]'
+                  );
                   if (drawer instanceof HTMLElement) drawer.click();
                 }}
                 className="mt-4 px-6 py-3 bg-sage-600 text-white rounded-lg font-semibold hover:bg-sage-700 transition-all shadow-md hover:shadow-lg"
@@ -292,9 +306,11 @@ export default function Page() {
             {totalPages > 1 && (
               <div className="flex items-center justify-center gap-2 mt-8">
                 <button
-                  onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(1, prev - 1))
+                  }
                   disabled={currentPage === 1}
-                  className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-sage-300 text-sage-700 rounded-lg hover:bg-sage-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md"
+                  className="flex items-center gap-2 px-4 py-2 bg-card border-2 border-border rounded-lg hover:bg-sage-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md"
                   title="Page précédente"
                 >
                   <ChevronLeft className="w-5 h-5" />
@@ -322,8 +338,8 @@ export default function Page() {
                           onClick={() => setCurrentPage(page)}
                           className={`w-10 h-10 rounded-lg font-semibold transition-all shadow-md ${
                             currentPage === page
-                              ? "bg-sage-600 text-white"
-                              : "bg-white border-2 border-sage-300 text-sage-700 hover:bg-sage-50"
+                              ? "bg-primary text-primary-foreground"
+                              : "bg-card border-2 border-border hover:bg-primary hover:text-primary-foreground cursor-pointer"
                           }`}
                         >
                           {page}
@@ -333,9 +349,11 @@ export default function Page() {
                 </div>
 
                 <button
-                  onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+                  }
                   disabled={currentPage === totalPages}
-                  className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-sage-300 text-sage-700 rounded-lg hover:bg-sage-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md"
+                  className="flex items-center gap-2 px-4 py-2 bg-card border-2 cursor-pointer border-border rounded-lg hover:bg-primary hover:text-primary-foreground disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md"
                   title="Page suivante"
                 >
                   <span className="hidden sm:inline">Suivant</span>

@@ -7,15 +7,16 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-white/95 backdrop-blur-sm border-t-2 border-sage-300 mt-auto">
+    <footer className="bg-background backdrop-blur-sm border-t border-border mt-auto">
       <div className="container mx-auto px-4 py-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Copyright */}
-          <div className="flex items-center gap-2 text-sm text-sage-700">
+          <div className="flex items-center gap-2 text-sm text-primary">
             <span>© {currentYear} OpenRss</span>
             <span className="hidden md:inline">•</span>
             <span className="flex items-center gap-1">
-              Fait avec <Heart className="w-4 h-4 text-red-500 fill-red-500" /> pour la communauté
+              Fait avec <Heart className="w-4 h-4 text-red-500 fill-red-500" />{" "}
+              pour la communauté
             </span>
           </div>
 
@@ -23,7 +24,7 @@ export default function Footer() {
           <div className="flex items-center gap-4">
             <Link
               href="/cgu"
-              className="flex items-center gap-2 text-sm text-sage-700 hover:text-sage-900 transition-colors font-medium"
+              className="flex items-center gap-2 text-sm text-primary hover:text-primary/70 transition-colors font-medium"
             >
               <FileText className="w-4 h-4" />
               <span>Conditions Générales d'Utilisation</span>
