@@ -310,7 +310,7 @@ export default function Page() {
                     setCurrentPage((prev) => Math.max(1, prev - 1))
                   }
                   disabled={currentPage === 1}
-                  className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-sage-300 text-sage-700 rounded-lg hover:bg-sage-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md"
+                  className="flex items-center gap-2 px-4 py-2 bg-card border-2 border-border rounded-lg hover:bg-sage-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md"
                   title="Page précédente"
                 >
                   <ChevronLeft className="w-5 h-5" />
@@ -338,8 +338,8 @@ export default function Page() {
                           onClick={() => setCurrentPage(page)}
                           className={`w-10 h-10 rounded-lg font-semibold transition-all shadow-md ${
                             currentPage === page
-                              ? "bg-sage-600 text-white"
-                              : "bg-white border-2 border-sage-300 text-sage-700 hover:bg-sage-50"
+                              ? "bg-primary text-primary-foreground"
+                              : "bg-card border-2 border-border hover:bg-primary hover:text-primary-foreground cursor-pointer"
                           }`}
                         >
                           {page}
@@ -353,7 +353,7 @@ export default function Page() {
                     setCurrentPage((prev) => Math.min(totalPages, prev + 1))
                   }
                   disabled={currentPage === totalPages}
-                  className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-sage-300 text-sage-700 rounded-lg hover:bg-sage-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md"
+                  className="flex items-center gap-2 px-4 py-2 bg-card border-2 cursor-pointer border-border rounded-lg hover:bg-primary hover:text-primary-foreground disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md"
                   title="Page suivante"
                 >
                   <span className="hidden sm:inline">Suivant</span>
