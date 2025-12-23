@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function SettingsPage() {
   const { settings, updateSettings, resetSettings } = useSettings();
@@ -136,9 +137,9 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-sage-50 via-white to-sage-100">
+    <div className="min-h-screen bg-linear-to-br from-background via-background to-background/90">
       {/* Header */}
-      <header className="bg-white/95 backdrop-blur-sm shadow-lg mb-8 sticky top-0 z-40 border-b-2 border-sage-300">
+      <header className="bg-background backdrop-blur-sm shadow-lg mb-8 sticky top-0 z-40 border-b-2 border-border">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center gap-4">
             <Link
@@ -146,29 +147,30 @@ export default function SettingsPage() {
               className="p-2 hover:bg-sage-100 rounded-lg transition-colors"
               title="Retour"
             >
-              <ArrowLeft className="w-6 h-6 text-sage-700" />
+              <ArrowLeft className="w-6 h-6 text-primary" />
             </Link>
             <div>
-              <h1 className="text-2xl font-bold text-sage-900">Paramètres</h1>
-              <p className="text-sm text-sage-600">
+              <h1 className="text-2xl font-bold ">Paramètres</h1>
+              <p className="text-sm text-primary">
                 Configurez votre application
               </p>
             </div>
+            {/* <ThemeToggle /> */}
           </div>
         </div>
       </header>
 
       <main className="container mx-auto px-4 pb-12">
         {/* n8n Webhook Section */}
-        <section className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-2 border-sage-200">
+        <section className="bg-card rounded-2xl shadow-lg p-6 mb-6 border-2 border-border">
           <div className="flex items-center gap-3 mb-4">
-            <Webhook className="w-6 h-6 text-sage-700" />
-            <h2 className="text-xl font-bold text-sage-900">Webhook n8n</h2>
+            <Webhook className="w-6 h-6 text-primary" />
+            <h2 className="text-xl font-bold">Webhook n8n</h2>
           </div>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-semibold text-sage-700 mb-2">
+              <label className="block text-sm font-semibold text-primary mb-2">
                 URL du Webhook n8n
               </label>
               <input
@@ -176,9 +178,9 @@ export default function SettingsPage() {
                 value={n8nWebhookUrl}
                 onChange={(e) => setN8nWebhookUrl(e.target.value)}
                 placeholder="https://n8n.example.com/webhook/your-webhook-id"
-                className="w-full px-4 py-3 border-2 border-sage-300 rounded-xl focus:border-sage-600 focus:outline-none transition-colors"
+                className="w-full px-4 py-3 border-2 border-border rounded-xl focus:border-text-primary focus:outline-none transition-colors"
               />
-              <p className="mt-2 text-sm text-sage-600">
+              <p className="mt-2 text-sm text-text-primary">
                 L&apos;URL du webhook n8n pour envoyer les articles vers Notion
                 et Discord
               </p>
@@ -190,11 +192,11 @@ export default function SettingsPage() {
                 id="autoSend"
                 checked={autoSendToN8n}
                 onChange={(e) => setAutoSendToN8n(e.target.checked)}
-                className="w-5 h-5 text-sage-600 border-2 border-sage-300 rounded focus:ring-sage-500"
+                className="w-5 h-5 text-text-primary border-2 border-border rounded focus:ring-sage-500"
               />
               <label
                 htmlFor="autoSend"
-                className="text-sm font-medium text-sage-700"
+                className="text-sm font-medium text-primary"
               >
                 Envoyer automatiquement tous les nouveaux articles vers n8n
               </label>
@@ -202,7 +204,7 @@ export default function SettingsPage() {
 
             <button
               onClick={testWebhook}
-              className="px-4 py-2 bg-sage-100 text-sage-700 rounded-lg hover:bg-sage-200 transition-colors font-semibold"
+              className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/80 cursor-pointer transition-colors font-semibold"
             >
               Tester le webhook
             </button>
@@ -210,21 +212,21 @@ export default function SettingsPage() {
         </section>
 
         {/* Display Settings */}
-        <section className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-2 border-sage-200">
+        <section className="bg-card rounded-2xl shadow-lg p-6 mb-6 border-2 border-border">
           <div className="flex items-center gap-3 mb-4">
-            <List className="w-6 h-6 text-sage-700" />
-            <h2 className="text-xl font-bold text-sage-900">Affichage</h2>
+            <List className="w-6 h-6 text-primary" />
+            <h2 className="text-xl font-bold ">Affichage</h2>
           </div>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-semibold text-sage-700 mb-2">
+              <label className="block text-sm font-semibold text-primary mb-2">
                 Articles par page
               </label>
               <select
                 value={articlesPerPage}
                 onChange={(e) => setArticlesPerPage(Number(e.target.value))}
-                className="w-full px-4 py-3 border-2 border-sage-300 rounded-xl focus:border-sage-600 focus:outline-none transition-colors"
+                className="w-full px-4 py-3 border-2 border-border rounded-xl focus:border-text-primary focus:outline-none transition-colors"
               >
                 <option value={10}>10 articles</option>
                 <option value={20}>20 articles</option>
@@ -233,15 +235,15 @@ export default function SettingsPage() {
               </select>
             </div>
 
-            <div className="pt-4 border-t border-sage-200">
-              <label className="block text-sm font-semibold text-sage-700 mb-3">
+            <div className="pt-4 border-t border-border">
+              <label className="block text-sm font-semibold text-primary mb-3">
                 Boutons d&apos;action sur les cartes
               </label>
               <div className="space-y-3">
                 {/* Notion Toggle */}
-                <div className="flex items-center justify-between p-3 bg-sage-50 rounded-lg">
+                <div className="flex items-center justify-between p-3 bg-background rounded-lg">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-sage-700">
+                    <span className="text-sm font-medium text-primary">
                       Bouton Notion
                     </span>
                   </div>
@@ -252,14 +254,14 @@ export default function SettingsPage() {
                       onChange={(e) => setShowNotionButton(e.target.checked)}
                       className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-sage-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sage-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-0.5 after:start-[2px] rtl:after:start-auto rtl:after:end-[2px] after:bg-white after:border-sage-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sage-600"></div>
+                    <div className="w-11 h-6 bg-sage-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sage-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-0.5 after:start-[2px] rtl:after:start-auto rtl:after:end-[2px] after:bg-card after:border-border after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-text-primary"></div>
                   </label>
                 </div>
 
                 {/* Discord Toggle */}
-                <div className="flex items-center justify-between p-3 bg-sage-50 rounded-lg">
+                <div className="flex items-center justify-between p-3 bg-background rounded-lg">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-sage-700">
+                    <span className="text-sm font-medium text-primary">
                       Bouton Discord
                     </span>
                   </div>
@@ -270,14 +272,14 @@ export default function SettingsPage() {
                       onChange={(e) => setShowDiscordButton(e.target.checked)}
                       className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-sage-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sage-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-0.5 after:start-[2px] rtl:after:start-auto rtl:after:end-[2px] after:bg-white after:border-sage-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+                    <div className="w-11 h-6 bg-sage-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sage-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-0.5 after:start-[2px] rtl:after:start-auto rtl:after:end-[2px] after:bg-card after:border-border after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
                   </label>
                 </div>
 
                 {/* Mattermost Toggle */}
-                <div className="flex items-center justify-between p-3 bg-sage-50 rounded-lg">
+                <div className="flex items-center justify-between p-3 bg-background rounded-lg">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-sage-700">
+                    <span className="text-sm font-medium text-primary">
                       Bouton Mattermost
                     </span>
                   </div>
@@ -290,11 +292,11 @@ export default function SettingsPage() {
                       }
                       className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-sage-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sage-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-0.5 after:start-0.5 rtl:after:start-auto rtl:after:end-0.5 after:bg-white after:border-sage-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                    <div className="w-11 h-6 bg-sage-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sage-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-0.5 after:start-0.5 rtl:after:start-auto rtl:after:end-0.5 after:bg-card after:border-border after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
                   </label>
                 </div>
               </div>
-              <p className="mt-3 text-xs text-sage-600">
+              <p className="mt-3 text-xs text-text-primary">
                 Contrôlez quels boutons d&apos;envoi apparaissent sur les cartes
                 d&apos;articles
               </p>
@@ -303,21 +305,19 @@ export default function SettingsPage() {
         </section>
 
         {/* Data Management */}
-        <section className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-2 border-sage-200">
+        <section className="bg-card rounded-2xl shadow-lg p-6 mb-6 border-2 border-border">
           <div className="flex items-center gap-3 mb-4">
-            <Trash2 className="w-6 h-6 text-sage-700" />
-            <h2 className="text-xl font-bold text-sage-900">
-              Gestion des données
-            </h2>
+            <Trash2 className="w-6 h-6 text-primary" />
+            <h2 className="text-xl font-bold ">Gestion des données</h2>
           </div>
 
           <div className="space-y-4">
             {/* Import/Export Section */}
-            <div className="p-4 bg-sage-50 rounded-lg border border-sage-200">
-              <p className="text-sm font-semibold text-sage-700 mb-3">
+            <div className="p-4 bg-background rounded-lg border border-border">
+              <p className="text-sm font-semibold text-primary mb-3">
                 Import/Export des flux RSS
               </p>
-              <p className="text-xs text-sage-600 mb-3">
+              <p className="text-xs text-text-primary mb-3">
                 Sauvegardez vos flux RSS ou importez-les depuis un fichier JSON
               </p>
 
@@ -337,14 +337,14 @@ export default function SettingsPage() {
                 <button
                   onClick={handleExportFeeds}
                   disabled={feeds.length === 0}
-                  className="flex items-center gap-2 px-4 py-2 bg-sage-600 text-white rounded-lg hover:bg-sage-700 disabled:bg-sage-300 disabled:cursor-not-allowed transition-colors font-semibold"
+                  className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary disabled:bg-sage-300 disabled:cursor-not-allowed transition-colors font-semibold"
                 >
                   <Download className="w-4 h-4" />
                   Exporter
                 </button>
                 <button
                   onClick={triggerFileInput}
-                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                  className="flex cursor-pointer items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
                 >
                   <Upload className="w-4 h-4" />
                   Importer
@@ -359,14 +359,14 @@ export default function SettingsPage() {
               </div>
             </div>
 
-            <div className="p-4 bg-sage-50 rounded-lg border border-sage-200">
-              <p className="text-sm text-sage-700 mb-3">
+            <div className="p-4 bg-background rounded-lg border border-border">
+              <p className="text-sm text-primary mb-3">
                 <strong>{feeds.length}</strong> flux RSS enregistrés
               </p>
               {!showClearConfirm ? (
                 <button
                   onClick={() => setShowClearConfirm(true)}
-                  className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-semibold"
+                  className="px-4 py-2 cursor-pointer bg-destructive text-white rounded-lg hover:bg-red-600 transition-colors font-semibold"
                 >
                   Supprimer tous les flux
                 </button>
@@ -384,7 +384,7 @@ export default function SettingsPage() {
                     </button>
                     <button
                       onClick={() => setShowClearConfirm(false)}
-                      className="px-4 py-2 bg-sage-200 text-sage-700 rounded-lg hover:bg-sage-300 transition-colors font-semibold"
+                      className="px-4 py-2 bg-sage-200 text-primary rounded-lg hover:bg-sage-300 transition-colors font-semibold"
                     >
                       Annuler
                     </button>
@@ -393,13 +393,13 @@ export default function SettingsPage() {
               )}
             </div>
 
-            <div className="p-4 bg-sage-50 rounded-lg border border-sage-200">
-              <p className="text-sm text-sage-700 mb-3">
+            <div className="p-4 bg-background rounded-lg border border-border">
+              <p className="text-sm text-primary mb-3">
                 Réinitialiser tous les paramètres aux valeurs par défaut
               </p>
               <button
                 onClick={handleReset}
-                className="px-4 py-2 bg-sage-600 text-white rounded-lg hover:bg-sage-700 transition-colors font-semibold flex items-center gap-2"
+                className="px-4 cursor-pointer py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary transition-colors font-semibold flex items-center gap-2"
               >
                 <RefreshCw className="w-4 h-4" />
                 Réinitialiser
@@ -412,13 +412,13 @@ export default function SettingsPage() {
         <div className="flex justify-end gap-4">
           <Link
             href="/"
-            className="px-6 py-3 bg-sage-200 text-sage-700 rounded-xl hover:bg-sage-300 transition-colors font-semibold"
+            className="px-6 py-3 bg-muted text-accent-foreground rounded-xl hover:bg-muted/80 transition-colors font-semibold"
           >
             Annuler
           </Link>
           <button
             onClick={handleSave}
-            className="px-6 py-3 bg-sage-600 text-white rounded-xl hover:bg-sage-700 transition-all shadow-md hover:shadow-lg font-semibold flex items-center gap-2"
+            className="px-6 py-3 bg-primary text-primary-foreground rounded-xl hover:bg-primary/80 cursor-pointer transition-all shadow-md hover:shadow-lg font-semibold flex items-center gap-2"
           >
             <Save className="w-5 h-5" />
             Enregistrer
