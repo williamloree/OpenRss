@@ -2,6 +2,29 @@
   "nodes": [
     {
       "parameters": {
+        "method": "POST",
+        "url": "=https://discord.com/api/channels/{{ $json.channel_id }}/messages/{{ $json.id }}/crosspost",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "discordBotApi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -320,
+        384
+      ],
+      "id": "4ccf25f9-8f89-434f-b385-c2a610211689",
+      "name": "Publish for community",
+      "credentials": {
+        "discordBotApi": {
+          "id": "FNAvNyuQTxrys7Ao",
+          "name": "Discord Bot account"
+        }
+      }
+    },
+    {
+      "parameters": {
         "httpMethod": "POST",
         "path": "825ef053-69fa-468d-ba1c-7e642ed95722",
         "responseMode": "responseNode",
@@ -9,47 +32,80 @@
       },
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
-      "position": [-2480, -272],
-      "id": "13bd4a40-1f4e-4d38-9fe5-82ac4affa93a",
+      "position": [
+        -1472,
+        240
+      ],
+      "id": "84c8736d-dc57-4eb3-972c-1aa3f7ac55f7",
       "name": "Webhook",
       "webhookId": "825ef053-69fa-468d-ba1c-7e642ed95722"
     },
     {
       "parameters": {
         "conditions": {
-          "string": [
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
             {
-              "value1": "={{ $json.body.target }}",
-              "operation": "notEqual",
-              "value2": "discord"
+              "id": "condition1",
+              "leftValue": "={{ $json.body.target }}",
+              "rightValue": "notion",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
             }
-          ]
-        }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
       },
-      "id": "cc34864f-156d-43ae-9829-441f264e32cb",
+      "id": "118e3c43-ea4b-4d92-a1dd-a531eb6d4c1d",
       "name": "Route to Notion",
       "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [-1952, -464],
+      "typeVersion": 2,
+      "position": [
+        -976,
+        64
+      ],
       "notes": "Send to Notion if target is 'notion' or 'both'"
     },
     {
       "parameters": {
         "conditions": {
-          "string": [
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
             {
-              "value1": "={{ $json.body.target }}",
-              "operation": "notEqual",
-              "value2": "notion"
+              "id": "condition1",
+              "leftValue": "={{ $json.body.target }}",
+              "rightValue": "discord",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
             }
-          ]
-        }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
       },
-      "id": "db6eed3c-7df1-4f10-94e7-2ea6d5392d1d",
+      "id": "a400b10e-3e0a-4792-8373-601ee08695dc",
       "name": "Route to Discord",
       "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [-1952, -272],
+      "typeVersion": 2,
+      "position": [
+        -960,
+        240
+      ],
       "notes": "Send to Discord if target is 'discord' or 'both'"
     },
     {
@@ -69,14 +125,17 @@
           "cachedResultName": "🤫『𝐒𝐞𝐜𝐫𝐞𝐭』",
           "cachedResultUrl": "https://discord.com/channels/1266387029365624924/1426382598388842618"
         },
-        "content": "**Test de webhook OpenRss**\n\n✅ Le webhook fonctionne correctement!\n🔔 Ce message est un test et ne sera pas ajouté à Notion.",
+        "content": "**Test de webhook Dechno**\n\n✅ Le webhook fonctionne correctement!\n🔔 Ce message est un test et ne sera pas ajouté à Notion.",
         "options": {}
       },
-      "id": "21e442b3-e606-458f-9ded-e1928586863c",
+      "id": "56719ce8-e9f2-4bd3-8800-ebde35c27249",
       "name": "Send Test to Discord Only",
       "type": "n8n-nodes-base.discord",
       "typeVersion": 2,
-      "position": [-1968, 176],
+      "position": [
+        -944,
+        672
+      ],
       "webhookId": "8dd3be75-9d31-45a9-9019-fd76a8711e73",
       "credentials": {
         "discordBotApi": {
@@ -84,24 +143,6 @@
           "name": "Discord Bot account"
         }
       }
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "string": [
-            {
-              "value1": "={{ $json.body.title }}",
-              "operation": "notContains",
-              "value2": "Test de webhook OpenRss"
-            }
-          ]
-        }
-      },
-      "id": "1d1ce008-9668-400a-8753-30cdee35d7fa",
-      "name": "Filter Test Messages1",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 1,
-      "position": [-2224, -272]
     },
     {
       "parameters": {
@@ -142,10 +183,13 @@
         },
         "options": {}
       },
-      "id": "391da34b-a7f5-4fa8-b7b1-362a691c1fe7",
+      "id": "1779948b-c45c-453b-bdb2-4dd30f949723",
       "name": "Create Notion Page",
       "type": "n8n-nodes-base.notion",
-      "position": [-1664, -480],
+      "position": [
+        -736,
+        48
+      ],
       "typeVersion": 2.2,
       "credentials": {
         "notionApi": {
@@ -183,8 +227,11 @@
       },
       "type": "n8n-nodes-base.discord",
       "typeVersion": 2,
-      "position": [-1664, -288],
-      "id": "43e2b15b-3cf3-4289-8243-33a749952efd",
+      "position": [
+        -736,
+        224
+      ],
+      "id": "048e1ae3-dcaa-4a08-95d9-a7a110fa66d4",
       "name": "Send a message",
       "webhookId": "a626a4d6-3fd4-4fb9-abdf-35969619ca41",
       "credentials": {
@@ -209,35 +256,19 @@
       },
       "name": "Mattermost",
       "type": "n8n-nodes-base.mattermost",
-      "position": [-1664, -96],
+      "position": [
+        -736,
+        416
+      ],
       "typeVersion": 1,
-      "id": "7ff42d49-876d-47b2-bc75-346c9e38c2fc",
+      "id": "96ca7235-a4ff-4c0f-a1b9-affb2be34924",
       "credentials": {
         "mattermostApi": {
           "id": "74YKBy1X0DgwySBV",
           "name": "Mattermost account"
         }
-      }
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "=https://discord.com/api/channels/{{ $json.channel_id }}/messages/{{ $json.id }}/crosspost",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "discordBotApi",
-        "options": {}
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [-1312, -336],
-      "id": "a47e35f6-6568-4def-a436-edb4f2f3e1d7",
-      "name": "Publish for community1",
-      "credentials": {
-        "discordBotApi": {
-          "id": "FNAvNyuQTxrys7Ao",
-          "name": "Discord Bot account"
-        }
-      }
+      "disabled": true
     },
     {
       "parameters": {
@@ -245,30 +276,69 @@
         "responseBody": "={{ { \"success\": true, \"message\": \"Article processed\", \"target\": $json.body.target || \"both\" } }}",
         "options": {}
       },
-      "id": "d6ece269-e1c8-4eaf-8237-e42bd853f76c",
+      "id": "eb42cde6-e11f-4ecc-b6b4-6d45e1631ae3",
       "name": "Respond to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
-      "position": [-1312, -96]
+      "position": [
+        -240,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "condition1",
+              "leftValue": "={{ $json.body.target }}",
+              "rightValue": "mattermost",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "f5c592e9-4a87-47bc-a306-24b13ccaca07",
+      "name": "Route to Mattermost",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -944,
+        432
+      ],
+      "notes": "Send to Mattermost if target is 'mattermost' or 'both'"
     },
     {
       "parameters": {
         "conditions": {
           "string": [
             {
-              "value1": "={{ $json.body.target }}",
-              "operation": "notEqual",
-              "value2": "notion"
+              "value1": "={{ $json.body.title }}",
+              "operation": "notContains",
+              "value2": "Test de webhook OpenRss"
             }
           ]
         }
       },
-      "id": "e51d969b-2e9e-4515-bff4-56a393318150",
-      "name": "Route to Mattermost",
+      "id": "485563dc-f110-4461-8162-b68d149a3add",
+      "name": "Filter Test Messages",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
-      "position": [-1952, -80],
-      "notes": "Send to Discord if target is 'discord' or 'both'"
+      "position": [
+        -1248,
+        240
+      ]
     }
   ],
   "connections": {
@@ -276,7 +346,7 @@
       "main": [
         [
           {
-            "node": "Filter Test Messages1",
+            "node": "Filter Test Messages",
             "type": "main",
             "index": 0
           }
@@ -316,34 +386,6 @@
         ]
       ]
     },
-    "Filter Test Messages1": {
-      "main": [
-        [
-          {
-            "node": "Route to Notion",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Route to Discord",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Route to Mattermost",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Send Test to Discord Only",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Create Notion Page": {
       "main": [
         [
@@ -359,7 +401,7 @@
       "main": [
         [
           {
-            "node": "Publish for community1",
+            "node": "Publish for community",
             "type": "main",
             "index": 0
           },
@@ -387,6 +429,34 @@
         [
           {
             "node": "Mattermost",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Test Messages": {
+      "main": [
+        [
+          {
+            "node": "Route to Notion",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Route to Discord",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Route to Mattermost",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Test to Discord Only",
             "type": "main",
             "index": 0
           }
