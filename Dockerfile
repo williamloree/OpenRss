@@ -28,7 +28,8 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
-RUN chown -R nextjs:nodejs /app
+# Create data directory for SQLite database
+RUN mkdir -p /app/data && chown -R nextjs:nodejs /app
 
 USER nextjs
 
@@ -36,5 +37,8 @@ EXPOSE 3000
 
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
+
+# Volume for SQLite database persistence
+VOLUME ["/app/data"]
 
 CMD ["node", "server.js"]
