@@ -15,9 +15,15 @@ const Card = ({ article }: { article: Article }) => {
   const [isSendingNotion, setIsSendingNotion] = useState(false);
   const [isSendingDiscord, setIsSendingDiscord] = useState(false);
   const [isSendingMattermost, setIsSendingMattermost] = useState(false);
-  const [notionStatus, setNotionStatus] = useState<"idle" | "success" | "error">("idle");
-  const [discordStatus, setDiscordStatus] = useState<"idle" | "success" | "error">("idle");
-  const [mattermostStatus, setMattermostStatus] = useState<"idle" | "success" | "error">("idle");
+  const [notionStatus, setNotionStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
+  const [discordStatus, setDiscordStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
+  const [mattermostStatus, setMattermostStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
 
   const imageUrl = article.attachements?.articleImg || article.enclosure?.link;
   const hasImage = imageUrl && imageUrl.trim() !== "";
@@ -154,11 +160,12 @@ const Card = ({ article }: { article: Article }) => {
 
   return (
     <div
-      className="group flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl border-2 border-sage-200 hover:border-sage-500 relative"
+      className="group flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl border border-border hover:border-sage-500 relative"
       style={{
-        transformStyle: 'preserve-3d',
-        perspective: '1000px',
-        transition: 'transform 0.1s ease-out, box-shadow 0.3s ease, border-color 0.3s ease'
+        transformStyle: "preserve-3d",
+        perspective: "1000px",
+        transition:
+          "transform 0.1s ease-out, box-shadow 0.3s ease, border-color 0.3s ease",
       }}
       onMouseMove={(e) => {
         const card = e.currentTarget;
@@ -174,15 +181,20 @@ const Card = ({ article }: { article: Article }) => {
       }}
       onMouseLeave={(e) => {
         const card = e.currentTarget;
-        card.style.transition = 'transform 0.5s ease-out, box-shadow 0.3s ease, border-color 0.3s ease';
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+        card.style.transition =
+          "transform 0.5s ease-out, box-shadow 0.3s ease, border-color 0.3s ease";
+        card.style.transform =
+          "perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)";
         setTimeout(() => {
-          card.style.transition = 'transform 0.1s ease-out, box-shadow 0.3s ease, border-color 0.3s ease';
+          card.style.transition =
+            "transform 0.1s ease-out, box-shadow 0.3s ease, border-color 0.3s ease";
         }, 500);
       }}
     >
       {/* Action buttons - positioned absolutely */}
-      {(settings.showNotionButton || settings.showDiscordButton || settings.showMattermostButton) && (
+      {(settings.showNotionButton ||
+        settings.showDiscordButton ||
+        settings.showMattermostButton) && (
         <div className="absolute top-3 right-3 z-10 flex gap-2">
           {/* Send to Notion button */}
           {settings.showNotionButton && (
@@ -207,12 +219,32 @@ const Card = ({ article }: { article: Article }) => {
               {isSendingNotion ? (
                 <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
               ) : notionStatus === "success" ? (
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
               ) : notionStatus === "error" ? (
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               ) : (
                 <Icon icon="ri:notion-line" className="w-5 h-5" />
@@ -243,12 +275,32 @@ const Card = ({ article }: { article: Article }) => {
               {isSendingDiscord ? (
                 <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
               ) : discordStatus === "success" ? (
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
               ) : discordStatus === "error" ? (
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               ) : (
                 <Icon icon="ic:outline-discord" className="w-5 h-5" />
@@ -279,12 +331,32 @@ const Card = ({ article }: { article: Article }) => {
               {isSendingMattermost ? (
                 <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
               ) : mattermostStatus === "success" ? (
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
               ) : mattermostStatus === "error" ? (
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               ) : (
                 <Icon icon="simple-icons:mattermost" className="w-5 h-5" />
@@ -301,77 +373,77 @@ const Card = ({ article }: { article: Article }) => {
       >
         {/* Image Section */}
         <div className="relative w-full h-48 overflow-hidden">
-        {hasImage ? (
-          <img
-            alt={article.title}
-            src={imageUrl}
-            className="object-cover transition-transform duration-300 aspect-square w-full h-full"
-          />
-        ) : (
-          <div className="w-full h-full bg-linear-to-br from-sage-600 via-sage-500 to-sage-700 flex items-center justify-center">
-            <span className="text-6xl text-white/80">📰</span>
-          </div>
-        )}
+          {hasImage ? (
+            <img
+              alt={article.title}
+              src={imageUrl}
+              className="object-cover transition-transform duration-300 aspect-square w-full h-full"
+            />
+          ) : (
+            <div className="w-full h-full bg-linear-to-br from-sage-600 via-sage-500 to-sage-700 flex items-center justify-center">
+              <span className="text-6xl text-white/80">📰</span>
+            </div>
+          )}
 
-        {/* Feed Name Badge - positioned on image */}
-        {article.feedName && (
-          <div className="absolute top-3 left-3 z-10">
-            <span className="inline-flex items-center px-3 py-1.5 text-xs font-semibold bg-white/95 text-sage-900 rounded-full shadow-lg backdrop-blur-sm border border-sage-200">
-              {article.feedName}
+          {/* Feed Name Badge - positioned on image */}
+          {article.feedName && (
+            <div className="absolute top-3 left-3 z-10">
+              <span className="inline-flex items-center px-3 py-1.5 text-xs font-semibold bg-background text-card-foreground rounded-full shadow-lg border border-border">
+                {article.feedName}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Content Section */}
+        <div className="flex flex-col flex-1 p-5 bg-card">
+          {/* Title */}
+          <h2 className="text-xl font-bold text-card-foreground mb-3 line-clamp-2 leading-snug group-hover:text-primary transition-colors">
+            {article.title}
+          </h2>
+
+          {/* Description */}
+          {article.content?.summary && (
+            <p className="text-muted-foreground text-sm line-clamp-3 mb-4 flex-1 leading-relaxed">
+              {article.content.summary}
+            </p>
+          )}
+
+          {/* Meta Information */}
+          <div className="flex items-center justify-between pt-4 border-t border-border/50 text-sm text-primary">
+            {/* Author */}
+            <div className="flex items-center gap-2">
+              <User className="w-4 h-4" />
+              <span className="truncate max-w-37.5">{article.author}</span>
+            </div>
+
+            {/* Date */}
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4" />
+              <span>{formatDate(article.pubDate)}</span>
+            </div>
+          </div>
+
+          {/* Read More Button */}
+          <div className="mt-4">
+            <span className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-lg group-hover:bg-primary/70 transition-all">
+              Lire l&apos;article
+              <svg
+                className="w-4 h-4 transition-transform group-hover:translate-x-1"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
             </span>
           </div>
-        )}
-      </div>
-
-      {/* Content Section */}
-      <div className="flex flex-col flex-1 p-5 bg-sage-50">
-        {/* Title */}
-        <h2 className="text-xl font-bold text-sage-900 mb-3 line-clamp-2 leading-snug group-hover:text-sage-600 transition-colors">
-          {article.title}
-        </h2>
-
-        {/* Description */}
-        {article.content?.summary && (
-          <p className="text-sage-700 text-sm line-clamp-3 mb-4 flex-1 leading-relaxed">
-            {article.content.summary}
-          </p>
-        )}
-
-        {/* Meta Information */}
-        <div className="flex items-center justify-between pt-4 border-t border-sage-200 text-sm text-sage-600">
-          {/* Author */}
-          <div className="flex items-center gap-2">
-            <User className="w-4 h-4" />
-            <span className="truncate max-w-37.5">{article.author}</span>
-          </div>
-
-          {/* Date */}
-          <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4" />
-            <span>{formatDate(article.pubDate)}</span>
-          </div>
         </div>
-
-        {/* Read More Button */}
-        <div className="mt-4">
-          <span className="inline-flex items-center gap-2 px-4 py-2 bg-sage-600 text-white text-sm font-semibold rounded-lg group-hover:bg-sage-700 transition-all">
-            Lire l&apos;article
-            <svg
-              className="w-4 h-4 transition-transform group-hover:translate-x-1"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </span>
-        </div>
-      </div>
       </Link>
     </div>
   );
