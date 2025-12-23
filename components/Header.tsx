@@ -5,6 +5,7 @@ import { Bookmark, Settings, Library, FileText } from "lucide-react";
 import Link from "next/link";
 import Drawer from "./Drawer";
 import FeedLibrary from "./FeedLibrary";
+import { ThemeToggle } from "./ThemeToggle";
 
 interface HeaderProps {
   onSearch: (query: string) => void;
@@ -16,7 +17,14 @@ interface HeaderProps {
 }
 
 const Header = React.memo(
-  ({ onSearch, articleCount, loadedFeedInfo, currentPage, totalPages, onOpenPatchNotes }: HeaderProps) => {
+  ({
+    onSearch,
+    articleCount,
+    loadedFeedInfo,
+    currentPage,
+    totalPages,
+    onOpenPatchNotes,
+  }: HeaderProps) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isLibraryOpen, setIsLibraryOpen] = useState(false);
 
@@ -26,14 +34,14 @@ const Header = React.memo(
 
     return (
       <>
-        <header className="bg-white/95 backdrop-blur-sm shadow-lg mb-8 sticky top-0 z-40 border-b-2 border-sage-300">
+        <header className="bg-background backdrop-blur-sm shadow-lg mb-8 sticky top-0 z-40 border-b border-border">
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between gap-4">
               {/* Logo Section */}
               <div className="flex items-center gap-3">
                 <div className="hidden md:block">
-                  <h1 className="text-xl font-bold text-sage-900">OpenRss</h1>
-                  <p className="text-xs text-sage-600">Agrégateur RSS</p>
+                  <h1 className="text-xl font-bold text-foreground">OpenRss</h1>
+                  <p className="text-xs text-primary">Agrégateur RSS</p>
                 </div>
               </div>
 
@@ -44,11 +52,11 @@ const Header = React.memo(
                     id="search"
                     type="text"
                     onChange={(e) => onSearch(e.target.value)}
-                    className="w-full px-4 py-3 pl-12 rounded-xl border-2 border-sage-300 focus:border-sage-600 focus:outline-none transition-colors text-sage-900 placeholder-sage-500 bg-sage-50"
+                    className="w-full px-4 py-3 pl-12 rounded-xl border border-border focus:border-primary focus:outline-none transition-colors text-foreground placeholder-accent-foreground bg-card"
                     placeholder="Rechercher par titre, auteur, flux, date ou entrer une URL RSS..."
                   />
                   <svg
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-sage-500"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-accent-foreground"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -65,15 +73,18 @@ const Header = React.memo(
 
               {/* Stats Info */}
               {articleCount !== undefined && articleCount > 0 && (
-                <div className="hidden lg:block text-sm text-sage-700 font-medium bg-sage-50 px-4 py-3 rounded-xl border border-sage-200">
+                <div className="hidden lg:block text-sm text-foreground font-medium bg-card px-4 py-3 rounded-xl border border-border">
                   {articleCount} article{articleCount > 1 ? "s" : ""}
                   {loadedFeedInfo && ` • ${loadedFeedInfo}`}
-                  {totalPages && totalPages > 1 && ` • Page ${currentPage} / ${totalPages}`}
+                  {totalPages &&
+                    totalPages > 1 &&
+                    ` • Page ${currentPage} / ${totalPages}`}
                 </div>
               )}
 
               {/* Action Buttons */}
               <div className="flex items-center gap-3">
+                <ThemeToggle />
                 {onOpenPatchNotes && (
                   <button
                     onClick={onOpenPatchNotes}
@@ -99,7 +110,7 @@ const Header = React.memo(
                 </Link>
                 <button
                   onClick={() => setIsDrawerOpen(true)}
-                  className="flex items-center gap-2 px-4 py-3 bg-sage-600 text-white rounded-xl hover:bg-sage-700 transition-all shadow-md hover:shadow-lg"
+                  className="flex items-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-xl hover:bg-sage-700 transition-all shadow-md hover:shadow-lg"
                   title="Mes flux RSS"
                 >
                   <Bookmark className="w-5 h-5" />
