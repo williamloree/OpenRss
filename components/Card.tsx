@@ -160,6 +160,7 @@ const Card = ({ article }: { article: Article }) => {
 
   return (
     <div
+      title={article.feedName || undefined}
       className="group flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl border border-border hover:border-sage-500 relative"
       style={{
         transformStyle: "preserve-3d",
@@ -382,15 +383,6 @@ const Card = ({ article }: { article: Article }) => {
           ) : (
             <div className="w-full h-full bg-linear-to-br from-sage-600 via-sage-500 to-sage-700 flex items-center justify-center">
               <span className="text-6xl text-white/80">📰</span>
-            </div>
-          )}
-
-          {/* Feed Name Badge - positioned on image */}
-          {article.feedName && (
-            <div className="absolute top-3 left-3 z-10">
-              <span className="inline-flex items-center px-3 py-1.5 text-xs font-semibold bg-background text-card-foreground rounded-full shadow-lg border border-border">
-                {article.feedName}
-              </span>
             </div>
           )}
         </div>
