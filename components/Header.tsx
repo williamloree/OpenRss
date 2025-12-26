@@ -5,7 +5,7 @@ import { Bookmark, Settings, Library, FileText } from "lucide-react";
 import Link from "next/link";
 import Drawer from "./Drawer";
 import FeedLibrary from "./FeedLibrary";
-import { ThemeToggle } from "./ThemeToggle";
+import { ThemeToggle } from "./ui/ThemeToggle";
 
 interface HeaderProps {
   onSearch: (query: string) => void;

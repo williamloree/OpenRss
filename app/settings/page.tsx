@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export default function SettingsPage() {
   const { settings, updateSettings, resetSettings } = useSettings();
@@ -35,6 +35,7 @@ export default function SettingsPage() {
   const [showMattermostButton, setShowMattermostButton] = useState(
     settings.showMattermostButton
   );
+  const [showSquares, setShowSquares] = useState(settings.showSquares);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
   const [importMessage, setImportMessage] = useState<{
     type: "success" | "error";
@@ -49,6 +50,7 @@ export default function SettingsPage() {
     setShowNotionButton(settings.showNotionButton);
     setShowDiscordButton(settings.showDiscordButton);
     setShowMattermostButton(settings.showMattermostButton);
+    setShowSquares(settings.showSquares);
   }, [settings]);
 
   const handleSave = () => {
@@ -59,6 +61,7 @@ export default function SettingsPage() {
       showNotionButton,
       showDiscordButton,
       showMattermostButton,
+      showSquares,
     });
     toast.success("Paramètres sauvegardés avec succès !");
   };
@@ -299,6 +302,34 @@ export default function SettingsPage() {
               <p className="mt-3 text-xs text-text-primary">
                 Contrôlez quels boutons d&apos;envoi apparaissent sur les cartes
                 d&apos;articles
+              </p>
+            </div>
+
+            <div className="pt-4 border-t border-border">
+              <label className="block text-sm font-semibold text-primary mb-3">
+                Effets visuels
+              </label>
+              <div className="space-y-3">
+                {/* Squares Toggle */}
+                <div className="flex items-center justify-between p-3 bg-background rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium text-primary">
+                      Animation Squares
+                    </span>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={showSquares}
+                      onChange={(e) => setShowSquares(e.target.checked)}
+                      className="sr-only peer"
+                    />
+                    <div className="w-11 h-6 bg-sage-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sage-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-0.5 after:start-[2px] rtl:after:start-auto rtl:after:end-[2px] after:bg-card after:border-border after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-text-primary"></div>
+                  </label>
+                </div>
+              </div>
+              <p className="mt-3 text-xs text-text-primary">
+                Activer ou désactiver l&apos;animation de fond en arrière-plan
               </p>
             </div>
           </div>

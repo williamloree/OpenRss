@@ -12,7 +12,7 @@ import "aos/dist/aos.css";
 
 import Header from "@/components/Header";
 import Card from "@/components/Card";
-import Squares from "@/components/Squares";
+import Squares from "@/components/ui/Squares";
 import PatchNotes from "@/components/PatchNotes";
 import Footer from "@/components/Footer";
 
@@ -219,15 +219,17 @@ export default function Page() {
   return (
     <div className="min-h-screen relative flex flex-col">
       {/* Squares Background */}
-      <div className="fixed inset-0 -z-10 h-full w-full bg-background">
-        <Squares
-          direction="diagonal"
-          speed={0.5}
-          borderColor="#6B72801A"
-          squareSize={64}
-          hoverFillColor="rgba(198, 246, 213, 0.3)"
-        />
-      </div>
+      {settings.showSquares && (
+        <div className="fixed inset-0 -z-10 h-full w-full bg-background">
+          <Squares
+            direction="diagonal"
+            speed={0.5}
+            borderColor="#6B72801A"
+            squareSize={64}
+            hoverFillColor="rgba(198, 246, 213, 0.3)"
+          />
+        </div>
+      )}
 
       <Header
         onSearch={checkQueryUrl}
