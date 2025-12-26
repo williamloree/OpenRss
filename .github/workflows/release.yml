@@ -1,0 +1,111 @@
+name: Create Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get version from package.json
+        id: get_version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "TAG=v$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Check if tag exists
+        id: check_tag
+        run: |
+          if git rev-parse "v${{ steps.get_version.outputs.VERSION }}" >/dev/null 2>&1; then
+            echo "EXISTS=true" >> $GITHUB_OUTPUT
+          else
+            echo "EXISTS=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get previous tag
+        id: previous_tag
+        if: steps.check_tag.outputs.EXISTS == 'false'
+        run: |
+          PREVIOUS_TAG=$(git describe --abbrev=0 --tags 2>/dev/null || echo "")
+          echo "PREVIOUS_TAG=$PREVIOUS_TAG" >> $GITHUB_OUTPUT
+
+      - name: Generate changelog
+        id: changelog
+        if: steps.check_tag.outputs.EXISTS == 'false'
+        run: |
+          if [ -n "${{ steps.previous_tag.outputs.PREVIOUS_TAG }}" ]; then
+            CHANGELOG=$(git log ${{ steps.previous_tag.outputs.PREVIOUS_TAG }}..HEAD --pretty=format:"- %s (%h)" --no-merges)
+          else
+            CHANGELOG=$(git log --pretty=format:"- %s (%h)" --no-merges)
+          fi
+
+          # Save to file to handle multiline
+          echo "$CHANGELOG" > changelog.txt
+
+      - name: Create tag
+        if: steps.check_tag.outputs.EXISTS == 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "${{ steps.get_version.outputs.TAG }}" -m "Release ${{ steps.get_version.outputs.TAG }}"
+          git push origin "${{ steps.get_version.outputs.TAG }}"
+
+      - name: Create Release
+        if: steps.check_tag.outputs.EXISTS == 'false'
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get_version.outputs.TAG }}
+          release_name: Release v${{ steps.get_version.outputs.VERSION }}
+          body_path: changelog.txt
+          draft: false
+          prerelease: false
+
+  build-and-push-docker:
+    needs: create-release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Get version from package.json
+        id: get_version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: registry.williamloree.fr/openrss
+          tags: |
+            type=raw,value=latest
+            type=raw,value=${{ steps.get_version.outputs.VERSION }}
+            type=sha,prefix=main-
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
