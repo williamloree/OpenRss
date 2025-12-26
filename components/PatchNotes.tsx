@@ -121,7 +121,7 @@ export default function PatchNotes({
                       key={changeIndex}
                       className={`flex items-start gap-3 p-3 rounded-lg border ${config.bgColor} ${config.borderColor}`}
                     >
-                      <div className={`flex-shrink-0 mt-0.5 ${config.color}`}>
+                      <div className={`shrink-0 mt-0.5 ${config.color}`}>
                         <Icon className="w-5 h-5" />
                       </div>
                       <div className="flex-1">
