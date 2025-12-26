@@ -8,6 +8,7 @@ export interface AppSettings {
   showNotionButton: boolean;
   showDiscordButton: boolean;
   showMattermostButton: boolean;
+  showSquares: boolean;
 }
 
 const STORAGE_KEY = "openrss_settings";
@@ -20,6 +21,7 @@ const DEFAULT_SETTINGS: AppSettings = {
   showNotionButton: true,
   showDiscordButton: true,
   showMattermostButton: true,
+  showSquares: true,
 };
 
 let listeners: Array<() => void> = [];
