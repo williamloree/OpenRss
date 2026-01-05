@@ -448,6 +448,7 @@ export default function SettingsPage() {
             Annuler
           </Link>
           <button
+            data-umami-event="Save settings"
             onClick={handleSave}
             className="px-6 py-3 bg-primary text-primary-foreground rounded-xl hover:bg-primary/80 cursor-pointer transition-all shadow-md hover:shadow-lg font-semibold flex items-center gap-2"
           >
