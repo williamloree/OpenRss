@@ -24,14 +24,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const umamiWebsiteId = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
+
   return (
     <html lang="fr" suppressHydrationWarning>
       <head>
-        <script
-          defer
-          src="https://track.williamloree.fr/script.js"
-          data-website-id="1279da2d-6100-4cc2-89e2-a3972c0d6c0f"
-        ></script>
+        {umamiWebsiteId && (
+          <script
+            defer
+            src="https://track.williamloree.fr/script.js"
+            data-website-id={umamiWebsiteId}
+          ></script>
+        )}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
