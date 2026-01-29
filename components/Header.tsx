@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Bookmark, Settings, Library, FileText } from "lucide-react";
+import { Bookmark, BookmarkCheck, Settings, Library, FileText } from "lucide-react";
+import { useSavedArticles } from "@/hooks/useSavedArticles";
 import Link from "next/link";
 import Drawer from "./Drawer";
 import FeedLibrary from "./FeedLibrary";
@@ -27,6 +28,7 @@ const Header = React.memo(
   }: HeaderProps) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isLibraryOpen, setIsLibraryOpen] = useState(false);
+    const { articles: savedArticles } = useSavedArticles();
 
     const handleSelectFeed = (url: string) => {
       onSearch(url);
@@ -96,6 +98,18 @@ const Header = React.memo(
                     <FileText className="w-5 h-5" />
                   </button>
                 )}
+                <Link
+                  href="/saved"
+                  className="relative p-3 bg-amber-100 text-amber-700 rounded-xl hover:bg-amber-200 transition-all shadow-md hover:shadow-lg"
+                  title="Articles sauvegardés"
+                >
+                  <BookmarkCheck className="w-5 h-5" />
+                  {savedArticles.length > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-amber-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                      {savedArticles.length > 9 ? "9+" : savedArticles.length}
+                    </span>
+                  )}
+                </Link>
                 <button
                   onClick={() => setIsLibraryOpen(true)}
                   className="p-3 bg-blue-100 text-blue-700 rounded-xl hover:bg-blue-200 transition-all shadow-md hover:shadow-lg"

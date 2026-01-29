@@ -3,15 +3,19 @@
 import { Article } from "@/@types/Article";
 import Link from "next/link";
 import Image from "next/image";
-import { Calendar, User } from "lucide-react";
+import { Calendar, User, Bookmark, BookmarkCheck } from "lucide-react";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { useSettings } from "@/hooks/useSettings";
+import { useSavedArticles } from "@/hooks/useSavedArticles";
+import { toast } from "sonner";
 
 type SendTarget = "notion" | "discord" | "mattermost" | null;
 
 const Card = ({ article }: { article: Article }) => {
   const { settings } = useSettings();
+  const { isArticleSaved, saveArticle, removeArticle } = useSavedArticles();
+  const [isSaving, setIsSaving] = useState(false);
   const [isSendingNotion, setIsSendingNotion] = useState(false);
   const [isSendingDiscord, setIsSendingDiscord] = useState(false);
   const [isSendingMattermost, setIsSendingMattermost] = useState(false);
@@ -158,6 +162,29 @@ const Card = ({ article }: { article: Article }) => {
     }
   };
 
+  const handleToggleSave = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isArticleSaved(article.guid)) {
+      removeArticle(article.guid);
+      toast.info("Article retiré des sauvegardes");
+    } else {
+      setIsSaving(true);
+      toast.loading("Téléchargement de l'article...", { id: "saving-article" });
+      try {
+        await saveArticle(article);
+        toast.success("Article sauvegardé pour lecture hors-ligne", { id: "saving-article" });
+      } catch {
+        toast.error("Erreur lors de la sauvegarde", { id: "saving-article" });
+      } finally {
+        setIsSaving(false);
+      }
+    }
+  };
+
+  const isSaved = isArticleSaved(article.guid);
+
   return (
     <div
       title={article.feedName || undefined}
@@ -193,12 +220,30 @@ const Card = ({ article }: { article: Article }) => {
       }}
     >
       {/* Action buttons - positioned absolutely */}
-      {(settings.showNotionButton ||
-        settings.showDiscordButton ||
-        settings.showMattermostButton) && (
-        <div className="absolute top-3 right-3 z-10 flex gap-2">
-          {/* Send to Notion button */}
-          {settings.showNotionButton && (
+      <div className="absolute top-3 right-3 z-10 flex gap-2">
+        {/* Save for offline reading button */}
+        <button
+          data-umami-event="Save Article Offline"
+          onClick={handleToggleSave}
+          disabled={isSaving}
+          className={`p-2 rounded-lg transition-all shadow-lg backdrop-blur-sm disabled:opacity-50 ${
+            isSaved
+              ? "bg-amber-500 text-white"
+              : "bg-white/90 text-amber-600 hover:bg-amber-500 hover:text-white"
+          }`}
+          title={isSaving ? "Téléchargement..." : isSaved ? "Retirer des sauvegardes" : "Sauvegarder pour lecture hors-ligne"}
+        >
+          {isSaving ? (
+            <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+          ) : isSaved ? (
+            <BookmarkCheck className="w-5 h-5" />
+          ) : (
+            <Bookmark className="w-5 h-5" />
+          )}
+        </button>
+
+        {/* Send to Notion button */}
+        {settings.showNotionButton && (
             <button
               data-umami-event="Send to Notion"
               onClick={handleSendToNotion}
@@ -367,8 +412,7 @@ const Card = ({ article }: { article: Article }) => {
               )}
             </button>
           )}
-        </div>
-      )}
+      </div>
 
       <Link
         href={article.link}
