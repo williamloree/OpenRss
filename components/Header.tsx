@@ -84,11 +84,13 @@ const Header = React.memo(
 
               {/* Action Buttons */}
               <div className="flex items-center gap-3">
-                <ThemeToggle />
+                <div className="hidden md:block">
+                  <ThemeToggle />
+                </div>
                 {onOpenPatchNotes && (
                   <button
                     onClick={onOpenPatchNotes}
-                    className="p-3 bg-purple-100 text-purple-700 rounded-xl hover:bg-purple-200 transition-all shadow-md hover:shadow-lg"
+                    className="hidden md:block p-3 bg-purple-100 text-purple-700 rounded-xl hover:bg-purple-200 transition-all shadow-md hover:shadow-lg"
                     title="Notes de version"
                   >
                     <FileText className="w-5 h-5" />
