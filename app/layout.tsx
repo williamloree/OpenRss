@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
+import GitHubStarButton from "@/components/GitHubStarButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,6 +48,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <GitHubStarButton />
           <Toaster position="bottom-center" richColors />
         </ThemeProvider>
       </body>
