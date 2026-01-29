@@ -114,7 +114,7 @@ export default function FeedLibrary({ isOpen, onClose }: FeedLibraryProps) {
           </div>
           <button
             onClick={onClose}
-            className="p-2 cursor-pointer hover:bg-sage-100 rounded-lg transition-colors"
+            className="p-2 cursor-pointer hover:bg-muted rounded-lg transition-colors"
             title="Fermer"
           >
             <X className="w-6 h-6 text-primary" />
@@ -124,13 +124,13 @@ export default function FeedLibrary({ isOpen, onClose }: FeedLibraryProps) {
         {/* Search Bar */}
         <div className="p-4 border-b-2 border-border">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-border" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Rechercher un flux..."
-              className="w-full pl-10 pr-4 py-3 border-2 border-border rounded-xl focus:border-sage-600 focus:outline-none transition-colors"
+              className="w-full pl-10 pr-4 py-3 border-2 border-border rounded-xl focus:border-sage-600 focus:outline-none transition-colors bg-background text-foreground"
             />
           </div>
         </div>
@@ -153,12 +153,12 @@ export default function FeedLibrary({ isOpen, onClose }: FeedLibraryProps) {
                 ([categoryName, categoryFeeds]) => (
                   <div key={categoryName} className="space-y-3">
                     {/* Category Header */}
-                    <div className="flex items-center gap-2 sticky top-0 bg-white py-2">
+                    <div className="flex items-center gap-2 sticky top-0 bg-background py-2">
                       <span className="text-2xl">
                         {categoryFeeds[0].category_icon}
                       </span>
-                      <h3 className="text-lg font-bold">{categoryName}</h3>
-                      <span className="text-sm text-sage-500">
+                      <h3 className="text-lg font-bold text-foreground">{categoryName}</h3>
+                      <span className="text-sm text-muted-foreground">
                         ({categoryFeeds.length})
                       </span>
                     </div>
@@ -183,7 +183,7 @@ export default function FeedLibrary({ isOpen, onClose }: FeedLibraryProps) {
                                   </p>
                                 )}
                                 <div className="flex items-center gap-2 mt-2">
-                                  <span className="text-xs px-2 py-1 bg-sage-100 text-primary rounded-full">
+                                  <span className="text-xs px-2 py-1 bg-muted text-muted-foreground rounded-full">
                                     {feed.language.toUpperCase()}
                                   </span>
                                 </div>
