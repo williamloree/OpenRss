@@ -6,6 +6,7 @@ import { checkIsUrl } from "@/utils/string";
 import { useRssFeeds } from "@/hooks/useRssFeeds";
 import { useSettings } from "@/hooks/useSettings";
 import { useVersion } from "@/hooks/useVersion";
+import { useAutoReload } from "@/hooks/useAutoReload";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -205,6 +206,9 @@ export default function Page() {
   useEffect(() => {
     loadSavedFeeds();
   }, [loadSavedFeeds]);
+
+  // Auto-refresh des données toutes les 5 minutes (sans recharger la page)
+  useAutoReload(loadSavedFeeds, 5 * 60 * 1000);
 
   // Initialize AOS
   useEffect(() => {

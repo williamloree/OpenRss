@@ -200,6 +200,7 @@ const Card = ({ article }: { article: Article }) => {
           {/* Send to Notion button */}
           {settings.showNotionButton && (
             <button
+              data-umami-event="Send to Notion"
               onClick={handleSendToNotion}
               disabled={isSendingNotion}
               className={`p-2 rounded-lg transition-all ${
@@ -256,6 +257,7 @@ const Card = ({ article }: { article: Article }) => {
           {/* Send to Discord button */}
           {settings.showDiscordButton && (
             <button
+              data-umami-event="Send to Discord"
               onClick={handleSendToDiscord}
               disabled={isSendingDiscord}
               className={`p-2 rounded-lg transition-all ${
@@ -312,6 +314,7 @@ const Card = ({ article }: { article: Article }) => {
           {/* Send to Mattermost button */}
           {settings.showMattermostButton && (
             <button
+              data-umami-event="Send to Mattermost"
               onClick={handleSendToMattermost}
               disabled={isSendingMattermost}
               className={`p-2 rounded-lg transition-all ${
