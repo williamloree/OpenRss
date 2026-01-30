@@ -174,7 +174,9 @@ const Card = ({ article }: { article: Article }) => {
       toast.loading("Téléchargement de l'article...", { id: "saving-article" });
       try {
         await saveArticle(article);
-        toast.success("Article sauvegardé pour lecture hors-ligne", { id: "saving-article" });
+        toast.success("Article sauvegardé pour lecture hors-ligne", {
+          id: "saving-article",
+        });
       } catch {
         toast.error("Erreur lors de la sauvegarde", { id: "saving-article" });
       } finally {
@@ -231,7 +233,13 @@ const Card = ({ article }: { article: Article }) => {
               ? "bg-amber-500 text-white"
               : "bg-white/90 text-amber-600 hover:bg-amber-500 hover:text-white"
           }`}
-          title={isSaving ? "Téléchargement..." : isSaved ? "Retirer des sauvegardes" : "Sauvegarder pour lecture hors-ligne"}
+          title={
+            isSaving
+              ? "Téléchargement..."
+              : isSaved
+                ? "Retirer des sauvegardes"
+                : "Sauvegarder pour lecture hors-ligne"
+          }
         >
           {isSaving ? (
             <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
@@ -244,174 +252,174 @@ const Card = ({ article }: { article: Article }) => {
 
         {/* Send to Notion button */}
         {settings.showNotionButton && (
-            <button
-              data-umami-event="Send to Notion"
-              onClick={handleSendToNotion}
-              disabled={isSendingNotion}
-              className={`p-2 rounded-lg transition-all ${
-                notionStatus === "success"
-                  ? "bg-green-500 text-white"
-                  : notionStatus === "error"
+          <button
+            data-umami-event="Send to Notion"
+            onClick={handleSendToNotion}
+            disabled={isSendingNotion}
+            className={`p-2 rounded-lg transition-all ${
+              notionStatus === "success"
+                ? "bg-green-500 text-white"
+                : notionStatus === "error"
                   ? "bg-red-500 text-white"
                   : "bg-white/90 text-gray-800 hover:bg-gray-800 hover:text-white"
-              } shadow-lg backdrop-blur-sm disabled:opacity-50`}
-              title={
-                notionStatus === "success"
-                  ? "Envoyé à Notion!"
-                  : notionStatus === "error"
+            } shadow-lg backdrop-blur-sm disabled:opacity-50`}
+            title={
+              notionStatus === "success"
+                ? "Envoyé à Notion!"
+                : notionStatus === "error"
                   ? "Erreur d'envoi à Notion"
                   : "Envoyer vers Notion"
-              }
-            >
-              {isSendingNotion ? (
-                <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
-              ) : notionStatus === "success" ? (
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              ) : notionStatus === "error" ? (
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              ) : (
-                <Icon icon="ri:notion-line" className="w-5 h-5" />
-              )}
-            </button>
-          )}
+            }
+          >
+            {isSendingNotion ? (
+              <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+            ) : notionStatus === "success" ? (
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            ) : notionStatus === "error" ? (
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            ) : (
+              <Icon icon="ri:notion-line" className="w-5 h-5" />
+            )}
+          </button>
+        )}
 
-          {/* Send to Discord button */}
-          {settings.showDiscordButton && (
-            <button
-              data-umami-event="Send to Discord"
-              onClick={handleSendToDiscord}
-              disabled={isSendingDiscord}
-              className={`p-2 rounded-lg transition-all ${
-                discordStatus === "success"
-                  ? "bg-green-500 text-white"
-                  : discordStatus === "error"
+        {/* Send to Discord button */}
+        {settings.showDiscordButton && (
+          <button
+            data-umami-event="Send to Discord"
+            onClick={handleSendToDiscord}
+            disabled={isSendingDiscord}
+            className={`p-2 rounded-lg transition-all ${
+              discordStatus === "success"
+                ? "bg-green-500 text-white"
+                : discordStatus === "error"
                   ? "bg-red-500 text-white"
                   : "bg-white/90 text-indigo-600 hover:bg-indigo-600 hover:text-white"
-              } shadow-lg backdrop-blur-sm disabled:opacity-50`}
-              title={
-                discordStatus === "success"
-                  ? "Envoyé à Discord!"
-                  : discordStatus === "error"
+            } shadow-lg backdrop-blur-sm disabled:opacity-50`}
+            title={
+              discordStatus === "success"
+                ? "Envoyé à Discord!"
+                : discordStatus === "error"
                   ? "Erreur d'envoi à Discord"
                   : "Envoyer vers Discord"
-              }
-            >
-              {isSendingDiscord ? (
-                <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
-              ) : discordStatus === "success" ? (
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              ) : discordStatus === "error" ? (
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              ) : (
-                <Icon icon="ic:outline-discord" className="w-5 h-5" />
-              )}
-            </button>
-          )}
+            }
+          >
+            {isSendingDiscord ? (
+              <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+            ) : discordStatus === "success" ? (
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            ) : discordStatus === "error" ? (
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            ) : (
+              <Icon icon="ic:outline-discord" className="w-5 h-5" />
+            )}
+          </button>
+        )}
 
-          {/* Send to Mattermost button */}
-          {settings.showMattermostButton && (
-            <button
-              data-umami-event="Send to Mattermost"
-              onClick={handleSendToMattermost}
-              disabled={isSendingMattermost}
-              className={`p-2 rounded-lg transition-all ${
-                mattermostStatus === "success"
-                  ? "bg-green-500 text-white"
-                  : mattermostStatus === "error"
+        {/* Send to Mattermost button */}
+        {settings.showMattermostButton && (
+          <button
+            data-umami-event="Send to Mattermost"
+            onClick={handleSendToMattermost}
+            disabled={isSendingMattermost}
+            className={`p-2 rounded-lg transition-all ${
+              mattermostStatus === "success"
+                ? "bg-green-500 text-white"
+                : mattermostStatus === "error"
                   ? "bg-red-500 text-white"
                   : "bg-white/90 text-blue-600 hover:bg-blue-600 hover:text-white"
-              } shadow-lg backdrop-blur-sm disabled:opacity-50`}
-              title={
-                mattermostStatus === "success"
-                  ? "Envoyé à Mattermost!"
-                  : mattermostStatus === "error"
+            } shadow-lg backdrop-blur-sm disabled:opacity-50`}
+            title={
+              mattermostStatus === "success"
+                ? "Envoyé à Mattermost!"
+                : mattermostStatus === "error"
                   ? "Erreur d'envoi à Mattermost"
                   : "Envoyer vers Mattermost"
-              }
-            >
-              {isSendingMattermost ? (
-                <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
-              ) : mattermostStatus === "success" ? (
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              ) : mattermostStatus === "error" ? (
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              ) : (
-                <Icon icon="simple-icons:mattermost" className="w-5 h-5" />
-              )}
-            </button>
-          )}
+            }
+          >
+            {isSendingMattermost ? (
+              <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+            ) : mattermostStatus === "success" ? (
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            ) : mattermostStatus === "error" ? (
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            ) : (
+              <Icon icon="simple-icons:mattermost" className="w-5 h-5" />
+            )}
+          </button>
+        )}
       </div>
 
       <Link
@@ -422,10 +430,11 @@ const Card = ({ article }: { article: Article }) => {
         {/* Image Section */}
         <div className="relative w-full h-48 overflow-hidden">
           {hasImage ? (
-            <img
+            <Image
               alt={article.title}
               src={imageUrl}
-              className="object-cover transition-transform duration-300 aspect-square w-full h-full"
+              fill
+              className="object-cover transition-transform duration-300"
             />
           ) : (
             <div className="w-full h-full bg-linear-to-br from-sage-600 via-sage-500 to-sage-700 flex items-center justify-center">
