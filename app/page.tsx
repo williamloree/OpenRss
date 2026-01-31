@@ -246,12 +246,12 @@ export default function Page() {
       <main className="container mx-auto px-4 pb-12 flex-1">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-20">
-            <div className="text-sage-900 text-center bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border-2 border-sage-200">
-              <div className="w-16 h-16 mx-auto mb-6 border-4 border-sage-300 border-t-sage-600 rounded-full animate-spin"></div>
+            <div className="text-foreground text-center bg-card/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border-2 border-border">
+              <div className="w-16 h-16 mx-auto mb-6 border-4 border-border border-t-primary rounded-full animate-spin"></div>
               <h2 className="text-2xl font-bold mb-2">
                 Chargement des articles...
               </h2>
-              <p className="text-sage-700">
+              <p className="text-muted-foreground">
                 {feeds.length > 0
                   ? `Récupération de ${feeds.length} flux RSS`
                   : "Chargement en cours"}
@@ -260,9 +260,9 @@ export default function Page() {
           </div>
         ) : articles.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20">
-            <div className="text-sage-900 text-center bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border-2 border-sage-200">
+            <div className="text-foreground text-center bg-card/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border-2 border-border">
               <svg
-                className="w-24 h-24 mx-auto mb-6 text-sage-500"
+                className="w-24 h-24 mx-auto mb-6 text-muted-foreground"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -277,7 +277,7 @@ export default function Page() {
               <h2 className="text-2xl font-bold mb-2">
                 Aucun article à afficher
               </h2>
-              <p className="text-sage-700 mb-4">
+              <p className="text-muted-foreground mb-4">
                 Recherchez un article ou entrez une URL de flux RSS
               </p>
               <button

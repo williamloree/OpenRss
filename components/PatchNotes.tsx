@@ -13,30 +13,30 @@ const changeTypeConfig = {
   new: {
     icon: Sparkles,
     label: "Nouveau",
-    color: "text-blue-600",
-    bgColor: "bg-blue-50",
-    borderColor: "border-blue-200",
+    color: "text-badge-new-text",
+    bgColor: "bg-badge-new-bg",
+    borderColor: "border-badge-new-border",
   },
   improvement: {
     icon: Wrench,
     label: "Amélioration",
-    color: "text-green-600",
-    bgColor: "bg-green-50",
-    borderColor: "border-green-200",
+    color: "text-badge-improvement-text",
+    bgColor: "bg-badge-improvement-bg",
+    borderColor: "border-badge-improvement-border",
   },
   fix: {
     icon: Bug,
     label: "Correction",
-    color: "text-orange-600",
-    bgColor: "bg-orange-50",
-    borderColor: "border-orange-200",
+    color: "text-badge-fix-text",
+    bgColor: "bg-badge-fix-bg",
+    borderColor: "border-badge-fix-border",
   },
   breaking: {
     icon: AlertTriangle,
     label: "Breaking Change",
-    color: "text-red-600",
-    bgColor: "bg-red-50",
-    borderColor: "border-red-200",
+    color: "text-badge-breaking-text",
+    bgColor: "bg-badge-breaking-bg",
+    borderColor: "border-badge-breaking-border",
   },
 };
 
@@ -70,7 +70,7 @@ export default function PatchNotes({
                 </div>
               )}
               <h2 className="text-2xl font-bold mb-1">Notes de version</h2>
-              <p className="text-sage-100 text-sm">
+              <p className="text-sm opacity-90">
                 Version {latestPatchNote.version} •{" "}
                 {new Date(latestPatchNote.date).toLocaleDateString("fr-FR", {
                   day: "numeric",
@@ -98,7 +98,7 @@ export default function PatchNotes({
             >
               {noteIndex > 0 && (
                 <div className="mb-4">
-                  <h3 className="text-lg font-bold mb-1">
+                  <h3 className="text-lg font-bold mb-1 text-foreground">
                     Version {note.version}
                   </h3>
                   <p className="text-sm text-primary">
@@ -130,7 +130,7 @@ export default function PatchNotes({
                         >
                           {config.label}
                         </div>
-                        <p className="text-sm text-sage-800 leading-relaxed">
+                        <p className="text-sm text-foreground leading-relaxed">
                           {change.description}
                         </p>
                       </div>
