@@ -25,6 +25,23 @@
   --primary: oklch(0.543 0.0476 154.07);
   --primary-foreground: oklch(1 0 0);
   --destructive: red;
+
+  /* Badge colors - light mode */
+  --badge-new-text: oklch(0.4645 0.1388 255.43);
+  --badge-new-bg: oklch(0.951 0.032 255.43);
+  --badge-new-border: oklch(0.864 0.0854 255.43);
+
+  --badge-improvement-text: oklch(0.4645 0.1088 140.72);
+  --badge-improvement-bg: oklch(0.951 0.032 140.72);
+  --badge-improvement-border: oklch(0.864 0.0854 140.72);
+
+  --badge-fix-text: oklch(0.5645 0.1388 55.43);
+  --badge-fix-bg: oklch(0.951 0.032 55.43);
+  --badge-fix-border: oklch(0.864 0.0854 55.43);
+
+  --badge-breaking-text: oklch(0.5645 0.1988 25.43);
+  --badge-breaking-bg: oklch(0.961 0.042 25.43);
+  --badge-breaking-border: oklch(0.864 0.0954 25.43);
 }
 
 @theme inline {
@@ -55,6 +72,20 @@
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-destructive: var(--destructive);
+
+  /* Badge colors */
+  --color-badge-new-text: var(--badge-new-text);
+  --color-badge-new-bg: var(--badge-new-bg);
+  --color-badge-new-border: var(--badge-new-border);
+  --color-badge-improvement-text: var(--badge-improvement-text);
+  --color-badge-improvement-bg: var(--badge-improvement-bg);
+  --color-badge-improvement-border: var(--badge-improvement-border);
+  --color-badge-fix-text: var(--badge-fix-text);
+  --color-badge-fix-bg: var(--badge-fix-bg);
+  --color-badge-fix-border: var(--badge-fix-border);
+  --color-badge-breaking-text: var(--badge-breaking-text);
+  --color-badge-breaking-bg: var(--badge-breaking-bg);
+  --color-badge-breaking-border: var(--badge-breaking-border);
 }
 
 .dark {
@@ -113,6 +144,23 @@
   --shadow-xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.1),
     0px 8px 10px -2px hsl(0 0% 0% / 0.1);
   --shadow-2xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.25);
+
+  /* Badge colors - dark mode */
+  --badge-new-text: oklch(0.7645 0.1188 255.43);
+  --badge-new-bg: oklch(0.2477 0.0598 255.43);
+  --badge-new-border: oklch(0.4461 0.0863 255.43);
+
+  --badge-improvement-text: oklch(0.7645 0.1188 140.72);
+  --badge-improvement-bg: oklch(0.2477 0.0598 140.72);
+  --badge-improvement-border: oklch(0.4461 0.0863 140.72);
+
+  --badge-fix-text: oklch(0.7645 0.1188 55.43);
+  --badge-fix-bg: oklch(0.2477 0.0598 55.43);
+  --badge-fix-border: oklch(0.4461 0.0863 55.43);
+
+  --badge-breaking-text: oklch(0.7645 0.1588 25.43);
+  --badge-breaking-bg: oklch(0.2477 0.0698 25.43);
+  --badge-breaking-border: oklch(0.4461 0.0963 25.43);
 }
 
 body {
