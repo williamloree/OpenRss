@@ -1,0 +1,6 @@
+# OpenRss - Robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://openrss.williamloree.fr/sitemap.xml
