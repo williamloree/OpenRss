@@ -46,6 +46,11 @@ next-env.d.ts
 Dockerfile
 .dockerignore
 docker-compose.yml
+compose.yml
+compose.prod.yml
+*.db
+*.db-shm
+*.db-wal
 
 # Claude
 .claude/
