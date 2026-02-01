@@ -1,5 +1,5 @@
 services:
-  OpenRss:
+  openrss:
     build:
       context: .
       dockerfile: Dockerfile
@@ -8,10 +8,24 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
+    volumes:
+      - openrss-data:/app/data
     restart: unless-stopped
     networks:
       - openrss-network
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
 
 networks:
   openrss-network:
     driver: bridge
+
+volumes:
+  openrss-data:
+    driver: local
