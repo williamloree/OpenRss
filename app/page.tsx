@@ -7,7 +7,9 @@ import { useRssFeeds } from "@/hooks/useRssFeeds";
 import { useSettings } from "@/hooks/useSettings";
 import { useVersion } from "@/hooks/useVersion";
 import { useAutoReload } from "@/hooks/useAutoReload";
+import { saveCachedArticles, loadCachedArticles } from "@/lib/article-cache";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { toast } from "sonner";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -84,6 +86,7 @@ export default function Page() {
       if (data.items && data.items.length > 0) {
         setArticles(data.items);
         setAllArticles(data.items);
+        saveCachedArticles(data.items);
         // Set feed info based on number of feeds loaded
         if (feeds.length === 1) {
           setLoadedFeedInfo(feeds[0].title || feeds[0].url);
@@ -97,9 +100,16 @@ export default function Page() {
       }
     } catch (error) {
       console.log("🚀 ~ loadSavedFeeds ~ error:", error);
-      setArticles([]);
-      setAllArticles([]);
-      setLoadedFeedInfo("");
+      // Hors ligne : on affiche les derniers articles chargés
+      const cached = loadCachedArticles();
+      setArticles(cached);
+      setAllArticles(cached);
+      setLoadedFeedInfo(cached.length > 0 ? "Hors ligne" : "");
+      if (cached.length > 0) {
+        toast.warning("Hors ligne : affichage des derniers articles chargés", {
+          id: "offline",
+        });
+      }
     } finally {
       setIsLoading(false);
     }

@@ -5,6 +5,7 @@ import { Bookmark, Settings, Library, FileText } from "lucide-react";
 import Link from "next/link";
 import Drawer from "./Drawer";
 import FeedLibrary from "./FeedLibrary";
+import InstallButton from "./InstallButton";
 import { ThemeToggle } from "./ui/ThemeToggle";
 
 interface HeaderProps {
@@ -96,6 +97,7 @@ const Header = React.memo(
                     <FileText className="w-5 h-5" />
                   </button>
                 )}
+                <InstallButton />
                 <button
                   onClick={() => setIsLibraryOpen(true)}
                   className="p-3 bg-blue-100 text-blue-700 rounded-xl hover:bg-blue-200 transition-all shadow-md hover:shadow-lg"

@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
 import GitHubStarButton from "@/components/GitHubStarButton";
+import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,6 +38,11 @@ export const metadata: Metadata = {
     title: "OpenRss - Agrégateur de flux RSS",
     description: "Agrégateur de flux RSS moderne et open source. Gratuit, sans inscription.",
   },
+  appleWebApp: {
+    capable: true,
+    title: "OpenRss",
+    statusBarStyle: "default",
+  },
   robots: {
     index: true,
     follow: true,
@@ -45,6 +51,13 @@ export const metadata: Metadata = {
       follow: true,
     },
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+  ],
 };
 
 export default function RootLayout({
@@ -102,6 +115,7 @@ export default function RootLayout({
           {children}
           <GitHubStarButton />
           <Toaster position="bottom-center" richColors />
+          <ServiceWorkerRegister />
         </ThemeProvider>
       </body>
     </html>

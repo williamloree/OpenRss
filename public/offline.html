@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hors ligne - OpenRss</title>
+    <style>
+      :root { --bg: #ffffff; --fg: #3b4953; --card: #f5f9f1; --border: #d7e9bb; --primary: #5a7863; }
+      @media (prefers-color-scheme: dark) {
+        :root { --bg: #0f172a; --fg: #d4d8e0; --card: #1e293b; --border: #475569; --primary: #7fc49a; }
+      }
+      body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+        background: var(--bg); color: var(--fg); font-family: Arial, Helvetica, sans-serif; padding: 16px; box-sizing: border-box; }
+      .card { max-width: 420px; text-align: center; background: var(--card); border: 2px solid var(--border);
+        border-radius: 16px; padding: 32px; }
+      h1 { font-size: 1.5rem; margin: 0 0 8px; }
+      p { margin: 0 0 24px; opacity: 0.8; }
+      button { background: var(--primary); color: #fff; border: 0; border-radius: 8px; padding: 12px 24px;
+        font-weight: 600; font-size: 1rem; cursor: pointer; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Vous êtes hors ligne</h1>
+      <p>Cette page n'est pas disponible sans connexion. Vérifiez votre réseau puis réessayez.</p>
+      <button onclick="location.reload()">Réessayer</button>
+    </div>
+  </body>
+</html>
