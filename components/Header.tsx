@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Bookmark, Settings, Library, FileText } from "lucide-react";
 import Link from "next/link";
 import Drawer from "./Drawer";
@@ -29,6 +29,14 @@ const Header = React.memo(
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isLibraryOpen, setIsLibraryOpen] = useState(false);
 
+    // Debounce : évite un appel réseau à chaque frappe quand on tape une URL
+    const searchTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+    useEffect(() => () => clearTimeout(searchTimer.current), []);
+    const handleSearchChange = (value: string) => {
+      clearTimeout(searchTimer.current);
+      searchTimer.current = setTimeout(() => onSearch(value), 300);
+    };
+
     const handleSelectFeed = (url: string) => {
       onSearch(url);
     };
@@ -52,7 +60,7 @@ const Header = React.memo(
                   <input
                     id="search"
                     type="text"
-                    onChange={(e) => onSearch(e.target.value)}
+                    onChange={(e) => handleSearchChange(e.target.value)}
                     className="w-full px-4 py-3 pl-12 rounded-xl border border-border focus:border-primary focus:outline-none transition-colors text-foreground placeholder-accent-foreground bg-card"
                     placeholder="Rechercher par titre, auteur, flux, date ou entrer une URL RSS..."
                   />

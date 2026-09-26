@@ -2,13 +2,11 @@
 
 import { Article } from "@/@types/Article";
 import Link from "next/link";
-import Image from "next/image";
 import { Calendar, User } from "lucide-react";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { useSettings } from "@/hooks/useSettings";
-
-type SendTarget = "notion" | "discord" | "mattermost" | null;
+import { toast } from "sonner";
 
 const Card = ({ article }: { article: Article }) => {
   const { settings } = useSettings();
@@ -43,7 +41,7 @@ const Card = ({ article }: { article: Article }) => {
     e.stopPropagation();
 
     if (!settings.n8nWebhookUrl) {
-      alert("⚠️ Veuillez configurer l'URL du webhook n8n dans les Paramètres");
+      toast.warning("Veuillez configurer l'URL du webhook n8n dans les Paramètres");
       return;
     }
 
@@ -83,7 +81,7 @@ const Card = ({ article }: { article: Article }) => {
     e.stopPropagation();
 
     if (!settings.n8nWebhookUrl) {
-      alert("⚠️ Veuillez configurer l'URL du webhook n8n dans les Paramètres");
+      toast.warning("Veuillez configurer l'URL du webhook n8n dans les Paramètres");
       return;
     }
 
@@ -123,7 +121,7 @@ const Card = ({ article }: { article: Article }) => {
     e.stopPropagation();
 
     if (!settings.n8nWebhookUrl) {
-      alert("⚠️ Veuillez configurer l'URL du webhook n8n dans les Paramètres");
+      toast.warning("Veuillez configurer l'URL du webhook n8n dans les Paramètres");
       return;
     }
 
@@ -161,7 +159,7 @@ const Card = ({ article }: { article: Article }) => {
   return (
     <div
       title={article.feedName || undefined}
-      className="group flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl border border-border hover:border-sage-500 relative"
+      className="group flex flex-col h-full bg-card rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl border border-border hover:border-sage-500 relative"
       style={{
         transformStyle: "preserve-3d",
         perspective: "1000px",
@@ -378,9 +376,13 @@ const Card = ({ article }: { article: Article }) => {
         {/* Image Section */}
         <div className="relative w-full h-48 overflow-hidden">
           {hasImage ? (
+            // Images de domaines arbitraires : next/image imposerait de proxifier n'importe quelle URL
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               alt={article.title}
               src={imageUrl}
+              loading="lazy"
+              referrerPolicy="no-referrer"
               className="object-cover transition-transform duration-300 aspect-square w-full h-full"
             />
           ) : (

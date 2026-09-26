@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export default function SettingsPage() {
   const { settings, updateSettings, resetSettings } = useSettings();
@@ -68,7 +67,7 @@ export default function SettingsPage() {
 
   const handleReset = () => {
     resetSettings();
-    toast.success("Paramètres sauvegardés avec succès !");
+    toast.success("Paramètres réinitialisés");
   };
 
   const handleClearFeeds = () => {
@@ -78,7 +77,7 @@ export default function SettingsPage() {
 
   const testWebhook = async () => {
     if (!n8nWebhookUrl) {
-      alert("Veuillez entrer une URL de webhook d'abord");
+      toast.warning("Veuillez entrer une URL de webhook d'abord");
       return;
     }
 
@@ -105,12 +104,13 @@ export default function SettingsPage() {
       });
 
       if (response.ok) {
-        alert("✅ Test réussi ! Vérifiez Notion et Discord.");
+        toast.success("Test réussi ! Vérifiez Notion et Discord.");
       } else {
-        alert("❌ Échec du test. Vérifiez l'URL du webhook.");
+        const data = await response.json().catch(() => ({}));
+        toast.error(data.error || "Échec du test. Vérifiez l'URL du webhook.");
       }
     } catch (error) {
-      alert("❌ Erreur lors du test : " + error);
+      toast.error("Erreur lors du test : " + error);
     }
   };
 
@@ -158,8 +158,7 @@ export default function SettingsPage() {
                 Configurez votre application
               </p>
             </div>
-            {/* <ThemeToggle /> */}
-          </div>
+                      </div>
         </div>
       </header>
 

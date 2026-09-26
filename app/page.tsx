@@ -40,8 +40,13 @@ export default function Page() {
       try {
         if (!url) return;
         setIsLoading(true);
-        const res = await fetch(`/api/rss/parse?url=${url}`);
+        const res = await fetch(`/api/rss/parse?url=${encodeURIComponent(url)}`);
         const data = await res.json();
+
+        if (!res.ok) {
+          toast.error(data.message || "Impossible de charger ce flux RSS");
+          return;
+        }
 
         if (data.items && data.items.length > 0) {
           setArticles(data.items);

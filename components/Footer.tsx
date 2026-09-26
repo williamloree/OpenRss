@@ -27,7 +27,7 @@ export default function Footer() {
               className="flex items-center gap-2 text-sm text-primary hover:text-primary/70 transition-colors font-medium"
             >
               <FileText className="w-4 h-4" />
-              <span>Conditions Générales d'Utilisation</span>
+              <span>Conditions Générales d’Utilisation</span>
             </Link>
           </div>
         </div>

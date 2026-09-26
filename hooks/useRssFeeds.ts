@@ -276,7 +276,7 @@ export function useRssFeeds() {
             message: `${newFeeds.length} flux importé(s) avec succès`,
             count: newFeeds.length,
           });
-        } catch (error) {
+        } catch {
           resolve({
             success: false,
             message: "Erreur lors de la lecture du fichier JSON",
