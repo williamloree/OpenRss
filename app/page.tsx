@@ -7,6 +7,7 @@ import { useRssFeeds } from "@/hooks/useRssFeeds";
 import { useSettings } from "@/hooks/useSettings";
 import { useVersion } from "@/hooks/useVersion";
 import { useAutoReload } from "@/hooks/useAutoReload";
+import { usePushNotifications } from "@/hooks/usePushNotifications";
 import { saveCachedArticles, loadCachedArticles } from "@/lib/article-cache";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
@@ -29,6 +30,8 @@ export default function Page() {
   const { settings } = useSettings();
   const { showPatchNotes, isNewVersion, markVersionAsSeen, openPatchNotes } =
     useVersion();
+  // Garde la liste des flux notifiés à jour quand on ajoute/retire un flux
+  usePushNotifications(feeds);
 
   // Debug: log feeds when they change
   useEffect(() => {

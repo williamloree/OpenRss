@@ -43,7 +43,7 @@ function isPrivateIP(ip: string): boolean {
   );
 }
 
-async function assertPublicUrl(url: URL): Promise<void> {
+export async function assertPublicUrl(url: URL): Promise<void> {
   if (url.protocol !== "http:" && url.protocol !== "https:") {
     throw new UnsafeUrlError(`Protocole non autorisé : ${url.protocol}`);
   }

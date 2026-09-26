@@ -9,6 +9,24 @@ export interface PatchNote {
 }
 
 export const patchNotes: PatchNote[] = [{
+    version: "0.1.8",
+    date: "2026-09-26",
+    title: "Notifications push",
+    changes: [
+      {
+        type: "new",
+        description: "Notifications push : soyez prévenu des nouveaux articles de vos flux (Paramètres → Notifications)"
+      },
+      {
+        type: "new",
+        description: "Choix des flux à notifier, un par un"
+      },
+      {
+        type: "improvement",
+        description: "Chargement des flux plus rapide grâce à un cache côté serveur"
+      },
+    ]
+  },{
     version: "0.1.7",
     date: "2026-09-26",
     title: "Application installable",

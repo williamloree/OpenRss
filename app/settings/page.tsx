@@ -3,12 +3,14 @@
 import { useState, useEffect, useRef } from "react";
 import { useSettings } from "@/hooks/useSettings";
 import { useRssFeeds } from "@/hooks/useRssFeeds";
+import { usePushNotifications } from "@/hooks/usePushNotifications";
 import {
   ArrowLeft,
   Save,
   RefreshCw,
   Trash2,
   Webhook,
+  Bell,
   List,
   Download,
   Upload,
@@ -41,6 +43,27 @@ export default function SettingsPage() {
     text: string;
   } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const push = usePushNotifications(feeds);
+  const [isTogglingPush, setIsTogglingPush] = useState(false);
+
+  const handleTogglePush = async () => {
+    setIsTogglingPush(true);
+    try {
+      if (push.status === "enabled") {
+        await push.disable();
+        toast.success("Notifications désactivées");
+      } else {
+        await push.enable();
+        toast.success("Notifications activées !");
+      }
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Impossible de modifier les notifications"
+      );
+    } finally {
+      setIsTogglingPush(false);
+    }
+  };
 
   useEffect(() => {
     setN8nWebhookUrl(settings.n8nWebhookUrl);
@@ -211,6 +234,81 @@ export default function SettingsPage() {
               Tester le webhook
             </button>
           </div>
+        </section>
+
+        {/* Push Notifications */}
+        <section className="bg-card rounded-2xl shadow-lg p-6 mb-6 border-2 border-border">
+          <div className="flex items-center gap-3 mb-4">
+            <Bell className="w-6 h-6 text-primary" />
+            <h2 className="text-xl font-bold">Notifications</h2>
+          </div>
+
+          {push.status === "loading" ? (
+            <p className="text-sm text-muted-foreground">Chargement...</p>
+          ) : push.status === "unsupported" ? (
+            <p className="text-sm text-muted-foreground">
+              Votre navigateur ne gère pas les notifications push. Sur iPhone
+              et iPad, installez d&apos;abord OpenRss sur l&apos;écran
+              d&apos;accueil (Partager → Sur l&apos;écran d&apos;accueil).
+            </p>
+          ) : push.status === "unavailable" ? (
+            <p className="text-sm text-muted-foreground">
+              Les notifications ne sont pas disponibles pour le moment
+              (service worker inactif).
+            </p>
+          ) : push.status === "denied" ? (
+            <p className="text-sm text-muted-foreground">
+              Les notifications sont bloquées pour ce site. Autorisez-les dans
+              les réglages de votre navigateur puis rechargez la page.
+            </p>
+          ) : (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-3 bg-background rounded-lg">
+                <div>
+                  <p className="text-sm font-medium text-primary">
+                    Être notifié des nouveaux articles
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    Une notification par flux, vérification toutes les 15 minutes
+                  </p>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={push.status === "enabled"}
+                    disabled={isTogglingPush}
+                    onChange={handleTogglePush}
+                    className="sr-only peer"
+                  />
+                  <div className="w-11 h-6 bg-sage-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sage-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-0.5 after:start-[2px] rtl:after:start-auto rtl:after:end-[2px] after:bg-card after:border-border after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary peer-disabled:opacity-50"></div>
+                </label>
+              </div>
+
+              {push.status === "enabled" && feeds.length > 0 && (
+                <div className="pt-4 border-t border-border">
+                  <label className="block text-sm font-semibold text-primary mb-3">
+                    Flux notifiés
+                  </label>
+                  <div className="space-y-2 max-h-80 overflow-y-auto">
+                    {feeds.map((feed) => (
+                      <label
+                        key={feed.id}
+                        className="flex items-center gap-3 p-2 bg-background rounded-lg cursor-pointer"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={!push.mutedFeeds.includes(feed.url)}
+                          onChange={() => push.toggleFeed(feed.url)}
+                          className="w-4 h-4 accent-primary"
+                        />
+                        <span className="text-sm truncate">{feed.title}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </section>
 
         {/* Display Settings */}

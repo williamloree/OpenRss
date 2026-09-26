@@ -190,11 +190,20 @@ Aucune variable n'est obligatoire. Voir `.env.example` :
 | --- | --- |
 | `NEXT_PUBLIC_UMAMI_WEBSITE_ID` | Active le suivi Umami |
 | `ADMIN_TOKEN` | Autorise la modification de la bibliothèque (`Authorization: Bearer <token>`). Vide = lecture seule |
+| `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` | Clés des notifications push (`npx web-push generate-vapid-keys`). Si absentes, générées automatiquement et stockées dans `data/` |
+| `VAPID_SUBJECT` | Contact VAPID (`mailto:` ou URL `https://`) |
+| `PUSH_CHECK_INTERVAL_MINUTES` | Fréquence de vérification des nouveaux articles (défaut : 15) |
 | `ALLOW_PRIVATE_URLS` | `true` pour autoriser des flux / webhooks sur le réseau local (désactivé par défaut, protection SSRF) |
 
 ### PWA
 
 OpenRss est installable (bouton « Installer » dans l'en-tête, ou menu du navigateur). Le service worker (`public/sw.js`) n'est actif qu'en production et nécessite HTTPS (sauf `localhost`). Hors ligne, les derniers articles chargés restent affichés. Chaque changement de `version` dans `package.json` déclenche la mise à jour du service worker chez les utilisateurs.
+
+### Notifications push
+
+Activables dans Paramètres → Notifications (flux par flux). Le navigateur envoie son abonnement et la liste des flux choisis au serveur ; toutes les 15 minutes, le serveur vérifie ces flux et envoie une notification par flux contenant de nouveaux articles. Sur iOS, il faut d'abord installer l'app sur l'écran d'accueil (iOS 16.4+).
+
+Pour tester sans attendre : `curl -X POST https://<instance>/api/push/check -H "Authorization: Bearer $ADMIN_TOKEN"`.
 
 ### Personnalisation du thème
 

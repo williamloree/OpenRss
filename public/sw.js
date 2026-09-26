@@ -26,6 +26,44 @@ self.addEventListener("message", (event) => {
   if (event.data === "SKIP_WAITING") self.skipWaiting();
 });
 
+// Notifications push envoyées par le serveur (lib/push.ts)
+self.addEventListener("push", (event) => {
+  let data = {};
+  try {
+    data = event.data ? event.data.json() : {};
+  } catch {
+    data = { body: event.data ? event.data.text() : "" };
+  }
+
+  event.waitUntil(
+    self.registration.showNotification(data.title || "OpenRss", {
+      body: data.body || "Nouveaux articles disponibles",
+      icon: "/icons/icon-192.png",
+      badge: "/icons/icon-192.png",
+      tag: data.tag,
+      data: { url: data.url || "/" },
+    })
+  );
+});
+
+// Clic : réutilise un onglet OpenRss ouvert pour la page d'accueil, sinon ouvre l'URL
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const target = new URL(event.notification.data?.url || "/", self.location.origin);
+
+  event.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((windows) => {
+      if (target.origin === self.location.origin) {
+        const existing = windows.find((client) => new URL(client.url).origin === target.origin);
+        if (existing) {
+          return existing.navigate(target.href).then((client) => (client || existing).focus());
+        }
+      }
+      return self.clients.openWindow(target.href);
+    })
+  );
+});
+
 self.addEventListener("fetch", (event) => {
   const { request } = event;
   const url = new URL(request.url);
