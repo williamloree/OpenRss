@@ -184,7 +184,17 @@ Le projet utilise un thème personnalisé **Sage Green** avec les couleurs suiva
 
 ### Variables d'environnement
 
-Aucune variable d'environnement n'est requise. Le parsing RSS se fait côté serveur sans clé API.
+Aucune variable n'est obligatoire. Voir `.env.example` :
+
+| Variable | Rôle |
+| --- | --- |
+| `NEXT_PUBLIC_UMAMI_WEBSITE_ID` | Active le suivi Umami |
+| `ADMIN_TOKEN` | Autorise la modification de la bibliothèque (`Authorization: Bearer <token>`). Vide = lecture seule |
+| `ALLOW_PRIVATE_URLS` | `true` pour autoriser des flux / webhooks sur le réseau local (désactivé par défaut, protection SSRF) |
+
+### PWA
+
+OpenRss est installable (bouton « Installer » dans l'en-tête, ou menu du navigateur). Le service worker (`public/sw.js`) n'est actif qu'en production et nécessite HTTPS (sauf `localhost`). Hors ligne, les derniers articles chargés restent affichés. Chaque changement de `version` dans `package.json` déclenche la mise à jour du service worker chez les utilisateurs.
 
 ### Personnalisation du thème
 

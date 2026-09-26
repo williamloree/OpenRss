@@ -9,6 +9,32 @@ export interface PatchNote {
 }
 
 export const patchNotes: PatchNote[] = [{
+    version: "0.1.7",
+    date: "2026-09-26",
+    title: "Application installable",
+    changes: [
+      {
+        type: "new",
+        description: "OpenRss s'installe comme une application (PWA) sur mobile et ordinateur"
+      },
+      {
+        type: "new",
+        description: "Mode hors ligne : les derniers articles chargés restent consultables sans connexion"
+      },
+      {
+        type: "improvement",
+        description: "Notifications d'erreur plus claires et recherche plus fluide lors de la saisie d'une URL"
+      },
+      {
+        type: "fix",
+        description: "Les URL de flux contenant des paramètres (&, ?) sont maintenant correctement chargées"
+      },
+      {
+        type: "fix",
+        description: "Renforcement de la sécurité des requêtes côté serveur"
+      },
+    ]
+  },{
     version: "0.1.5",
     date: "2024-12-22",
     title: "Version initiale",
