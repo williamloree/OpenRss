@@ -90,7 +90,8 @@ function convertRssItemToArticle(
   feedTitle: string,
   feedUrl: string
 ): Article {
-  const guid = item.guid || item.link || `${feedUrl}-${Date.now()}`;
+  // Identifiant stable : sert de clé React et à détecter les nouveaux articles
+  const guid = item.guid || item.link || `${feedUrl}-${item.title || ""}`;
   const title = item.title || "Untitled";
   const link = item.link || "";
   const author = item.creator || item.author || feedTitle || "Unknown";
@@ -139,17 +140,46 @@ function convertRssItemToArticle(
   };
 }
 
-/**
- * Parse un flux RSS depuis une URL
- */
-export async function parseRssFeed(url: string): Promise<{
+export interface ParsedRssFeed {
   feed: {
     title: string;
     description: string;
     link: string;
   };
   items: Article[];
-}> {
+}
+
+// Cache mémoire : évite de re-télécharger un flux demandé par plusieurs
+// clients (ou par la vérification des notifications) dans la même fenêtre.
+const CACHE_TTL_MS = 5 * 60 * 1000;
+const CACHE_MAX_ENTRIES = 500;
+const feedCache = new Map<string, { expiresAt: number; promise: Promise<ParsedRssFeed> }>();
+
+/**
+ * Parse un flux RSS depuis une URL (avec cache de 5 minutes)
+ */
+export function parseRssFeed(url: string): Promise<ParsedRssFeed> {
+  const now = Date.now();
+  const cached = feedCache.get(url);
+  if (cached && cached.expiresAt > now) {
+    return cached.promise;
+  }
+
+  const promise = fetchRssFeed(url);
+  feedCache.delete(url);
+  feedCache.set(url, { expiresAt: now + CACHE_TTL_MS, promise });
+  // Les erreurs ne sont pas mises en cache
+  promise.catch(() => feedCache.delete(url));
+
+  // Map conserve l'ordre d'insertion : on retire les plus anciennes entrées
+  while (feedCache.size > CACHE_MAX_ENTRIES) {
+    feedCache.delete(feedCache.keys().next().value!);
+  }
+
+  return promise;
+}
+
+async function fetchRssFeed(url: string): Promise<ParsedRssFeed> {
   try {
     const response = await safeFetch(url, {
       headers: {
