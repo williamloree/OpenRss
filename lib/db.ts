@@ -73,6 +73,23 @@ function runMigrations(database: Database.Database) {
   newFeeds.forEach(feed => {
     insertFeed.run(feed.categoryId, feed.title, feed.url, feed.description, feed.language);
   });
+
+  // Remplacer les flux morts (403 / 410 / format non supporté)
+  const replacedFeeds = [
+    { oldUrl: 'https://www.lesechos.fr/rss.xml', title: 'La Tribune', url: 'https://www.latribune.fr/feed.xml', description: 'Actualités économiques', language: 'fr' },
+    { oldUrl: 'http://feeds.hbr.org/harvardbusiness', title: 'Alternatives Économiques', url: 'https://www.alternatives-economiques.fr/rss.xml', description: 'Économie et société', language: 'fr' },
+    { oldUrl: 'https://tympanus.net/codrops/feed/', title: 'Creative Bloq', url: 'https://www.creativebloq.com/feeds/all', description: 'Design graphique et web', language: 'en' },
+    { oldUrl: 'https://openai.com/blog/rss/', title: 'OpenAI News', url: 'https://openai.com/news/rss.xml', description: 'Actualités OpenAI', language: 'en' },
+  ];
+
+  const replaceFeed = database.prepare('UPDATE OR IGNORE feeds_library SET title = ?, url = ?, description = ?, language = ? WHERE url = ?');
+  const deleteFeed = database.prepare('DELETE FROM feeds_library WHERE url = ?');
+
+  replacedFeeds.forEach(feed => {
+    replaceFeed.run(feed.title, feed.url, feed.description, feed.language, feed.oldUrl);
+    // Si le nouveau flux existait déjà, l'UPDATE est ignoré : on retire l'ancien
+    deleteFeed.run(feed.oldUrl);
+  });
 }
 
 function seedDatabase(database: Database.Database) {
@@ -119,13 +136,13 @@ function seedDatabase(database: Database.Database) {
     { category: 'Science', title: 'Futura Sciences', url: 'https://www.futura-sciences.com/rss/actualites.xml', description: 'Sciences et technologies', language: 'fr' },
 
     // Business
-    { category: 'Business', title: 'Les Echos', url: 'https://www.lesechos.fr/rss.xml', description: 'Actualités économiques', language: 'fr' },
-    { category: 'Business', title: 'Harvard Business Review', url: 'http://feeds.hbr.org/harvardbusiness', description: 'Management et stratégie', language: 'en' },
+    { category: 'Business', title: 'La Tribune', url: 'https://www.latribune.fr/feed.xml', description: 'Actualités économiques', language: 'fr' },
+    { category: 'Business', title: 'Alternatives Économiques', url: 'https://www.alternatives-economiques.fr/rss.xml', description: 'Économie et société', language: 'fr' },
 
     // Design
     { category: 'Design', title: 'Smashing Magazine', url: 'https://www.smashingmagazine.com/feed/', description: 'Web design et développement', language: 'en' },
     { category: 'Design', title: 'CSS-Tricks', url: 'https://css-tricks.com/feed/', description: 'CSS et front-end', language: 'en' },
-    { category: 'Design', title: 'Codrops', url: 'https://tympanus.net/codrops/feed/', description: 'Design et développement web', language: 'en' },
+    { category: 'Design', title: 'Creative Bloq', url: 'https://www.creativebloq.com/feeds/all', description: 'Design graphique et web', language: 'en' },
 
     // Développement
     { category: 'Développement', title: 'Dev.to', url: 'https://dev.to/feed', description: 'Communauté de développeurs', language: 'en' },
@@ -139,7 +156,7 @@ function seedDatabase(database: Database.Database) {
     { category: 'Crypto', title: 'Journal du Coin', url: 'https://journalducoin.com/feed/', description: 'Actualités crypto françaises', language: 'fr' },
 
     // IA
-    { category: 'IA', title: 'OpenAI Blog', url: 'https://openai.com/blog/rss/', description: 'Actualités OpenAI', language: 'en' },
+    { category: 'IA', title: 'OpenAI News', url: 'https://openai.com/news/rss.xml', description: 'Actualités OpenAI', language: 'en' },
     { category: 'IA', title: 'Hugging Face Blog', url: 'https://huggingface.co/blog/feed.xml', description: 'ML et NLP', language: 'en' },
     { category: 'IA', title: 'Google AI Blog', url: 'https://blog.research.google/atom.xml', description: 'Recherche en IA', language: 'en' },
 
