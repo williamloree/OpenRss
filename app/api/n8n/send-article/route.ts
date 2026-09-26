@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { safeFetch, UnsafeUrlError } from "@/lib/safe-fetch";
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,10 +16,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (!article?.title || !article?.link) {
+      return NextResponse.json(
+        { error: "Missing article title or link" },
+        { status: 400 }
+      );
+    }
+
     console.log("[n8n] Sending article to webhook:", article.title, "Target:", target || "both");
 
     // Send article data to n8n webhook
-    const response = await fetch(webhookUrl, {
+    const response = await safeFetch(webhookUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,12 +51,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const result = await response.json();
+    // n8n peut répondre autre chose que du JSON selon la config du webhook
+    const text = await response.text();
+    let result: unknown = text;
+    try {
+      result = JSON.parse(text);
+    } catch {}
     console.log("[n8n] Article sent successfully");
 
     return NextResponse.json({ success: true, data: result });
   } catch (error) {
     console.error("[n8n] Error sending article:", error);
+    if (error instanceof UnsafeUrlError) {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

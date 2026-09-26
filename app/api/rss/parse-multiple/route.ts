@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { parseMultipleRssFeeds } from "@/lib/rss-parser";
 
+const MAX_URLS = 100;
+
 export const POST = async (request: Request) => {
   try {
     const body = await request.json();
@@ -19,6 +21,15 @@ export const POST = async (request: Request) => {
       return NextResponse.json(
         {
           error: "All URLs must be strings",
+        },
+        { status: 400 }
+      );
+    }
+
+    if (urls.length > MAX_URLS) {
+      return NextResponse.json(
+        {
+          error: `Too many URLs (max ${MAX_URLS})`,
         },
         { status: 400 }
       );

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAllFeedsByCategory, addFeedToLibrary, getAllCategories } from '@/lib/db';
+import { requireAdmin } from '@/lib/admin-auth';
 
 // GET - Récupérer tous les flux ou toutes les catégories
 export async function GET(request: NextRequest) {
@@ -25,6 +26,9 @@ export async function GET(request: NextRequest) {
 
 // POST - Ajouter un nouveau flux à la bibliothèque
 export async function POST(request: NextRequest) {
+  const denied = requireAdmin(request);
+  if (denied) return denied;
+
   try {
     const body = await request.json();
     const { categoryId, title, url, description, language } = body;

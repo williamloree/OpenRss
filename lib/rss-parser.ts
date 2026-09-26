@@ -1,5 +1,8 @@
 import Parser from "rss-parser";
 import { Article } from "@/@types/Article";
+import { safeFetch } from "@/lib/safe-fetch";
+
+const MAX_FEED_SIZE = 5 * 1024 * 1024; // 5 Mo
 
 const parser = new Parser({
   customFields: {
@@ -29,7 +32,7 @@ interface RssItem {
   itunes?: {
     image?: string;
   };
-  "media:content"?: any;
+  "media:content"?: { $?: { url?: string } };
 }
 
 interface ParsedFeed {
@@ -148,7 +151,20 @@ export async function parseRssFeed(url: string): Promise<{
   items: Article[];
 }> {
   try {
-    const feed = await parser.parseURL(url) as ParsedFeed;
+    const response = await safeFetch(url, {
+      headers: {
+        "User-Agent": "OpenRss (+https://openrss.williamloree.fr)",
+        Accept: "application/rss+xml, application/atom+xml, application/xml, text/xml;q=0.9, */*;q=0.8",
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    const xml = await response.text();
+    if (xml.length > MAX_FEED_SIZE) {
+      throw new Error("Feed too large");
+    }
+    const feed = await parser.parseString(xml) as ParsedFeed;
 
     const items = feed.items.map((item) =>
       convertRssItemToArticle(item, feed.title || "", url)

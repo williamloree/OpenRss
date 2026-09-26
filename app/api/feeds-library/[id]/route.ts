@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getFeedById, updateFeedInLibrary, deleteFeedFromLibrary } from '@/lib/db';
+import { requireAdmin } from '@/lib/admin-auth';
 
 // GET - Récupérer un flux par ID
 export async function GET(
@@ -41,6 +42,9 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const denied = requireAdmin(request);
+  if (denied) return denied;
+
   try {
     const { id: idParam } = await params;
     const id = parseInt(idParam);
@@ -84,10 +88,10 @@ export async function PUT(
       success: true,
       message: 'Feed updated successfully'
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error updating feed:', error);
 
-    if (error.message?.includes('UNIQUE constraint failed')) {
+    if (error instanceof Error && error.message.includes('UNIQUE constraint failed')) {
       return NextResponse.json(
         { success: false, error: 'A feed with this URL already exists' },
         { status: 409 }
@@ -106,6 +110,9 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const denied = requireAdmin(request);
+  if (denied) return denied;
+
   try {
     const { id: idParam } = await params;
     const id = parseInt(idParam);
