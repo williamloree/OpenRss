@@ -189,11 +189,15 @@ Aucune variable n'est obligatoire. Voir `.env.example` :
 | Variable | Rôle |
 | --- | --- |
 | `NEXT_PUBLIC_UMAMI_WEBSITE_ID` | Active le suivi Umami |
-| `ADMIN_TOKEN` | Autorise la modification de la bibliothèque (`Authorization: Bearer <token>`). Vide = lecture seule |
+| `ADMIN_TOKEN` | Protège `POST /api/push/check` (`Authorization: Bearer <token>`). Vide = route désactivée |
 | `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` | Clés des notifications push (`npx web-push generate-vapid-keys`). Si absentes, générées automatiquement et stockées dans `data/` |
 | `VAPID_SUBJECT` | Contact VAPID (`mailto:` ou URL `https://`) |
 | `PUSH_CHECK_INTERVAL_MINUTES` | Fréquence de vérification des nouveaux articles (défaut : 15) |
 | `ALLOW_PRIVATE_URLS` | `true` pour autoriser des flux / webhooks sur le réseau local (désactivé par défaut, protection SSRF) |
+
+### Bibliothèque de flux
+
+La bibliothèque pré-remplie (bouton « Bibliothèque ») est définie dans [`lib/feeds-library.json`](lib/feeds-library.json) : catégories (`name`, `icon`) et leurs flux (`title`, `url`, `description`, `language`). Pour ajouter ou retirer un flux, modifiez ce fichier puis rebuildez : il est intégré au build, aucune base de données n'est nécessaire (compatible Vercel). Une URL en double fait échouer le build.
 
 ### PWA
 

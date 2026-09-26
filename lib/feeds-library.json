@@ -1,0 +1,218 @@
+[
+  {
+    "name": "Technologie",
+    "icon": "💻",
+    "feeds": [
+      {
+        "title": "TechCrunch",
+        "url": "https://techcrunch.com/feed/",
+        "description": "Actualités technologiques et startups",
+        "language": "en"
+      },
+      {
+        "title": "The Verge",
+        "url": "https://www.theverge.com/rss/index.xml",
+        "description": "Tech, science, art et culture",
+        "language": "en"
+      },
+      {
+        "title": "Numerama",
+        "url": "https://www.numerama.com/feed/",
+        "description": "Actualités tech françaises",
+        "language": "fr"
+      },
+      {
+        "title": "Frandroid",
+        "url": "https://www.frandroid.com/feed",
+        "description": "Actualités Android et tech",
+        "language": "fr"
+      }
+    ]
+  },
+  {
+    "name": "Actualités",
+    "icon": "📰",
+    "feeds": [
+      {
+        "title": "Le Monde",
+        "url": "https://www.lemonde.fr/rss/une.xml",
+        "description": "Actualités françaises",
+        "language": "fr"
+      },
+      {
+        "title": "BBC News",
+        "url": "http://feeds.bbci.co.uk/news/rss.xml",
+        "description": "Actualités internationales",
+        "language": "en"
+      },
+      {
+        "title": "France Info",
+        "url": "https://www.francetvinfo.fr/titres.rss",
+        "description": "Info en continu",
+        "language": "fr"
+      }
+    ]
+  },
+  {
+    "name": "Science",
+    "icon": "🔬",
+    "feeds": [
+      {
+        "title": "Science Daily",
+        "url": "https://www.sciencedaily.com/rss/all.xml",
+        "description": "Actualités scientifiques",
+        "language": "en"
+      },
+      {
+        "title": "Pour La Science",
+        "url": "https://www.pourlascience.fr/rss.xml",
+        "description": "Vulgarisation scientifique",
+        "language": "fr"
+      },
+      {
+        "title": "Futura Sciences",
+        "url": "https://www.futura-sciences.com/rss/actualites.xml",
+        "description": "Sciences et technologies",
+        "language": "fr"
+      }
+    ]
+  },
+  {
+    "name": "Business",
+    "icon": "💼",
+    "feeds": [
+      {
+        "title": "La Tribune",
+        "url": "https://www.latribune.fr/feed.xml",
+        "description": "Actualités économiques",
+        "language": "fr"
+      },
+      {
+        "title": "Alternatives Économiques",
+        "url": "https://www.alternatives-economiques.fr/rss.xml",
+        "description": "Économie et société",
+        "language": "fr"
+      }
+    ]
+  },
+  {
+    "name": "Design",
+    "icon": "🎨",
+    "feeds": [
+      {
+        "title": "Smashing Magazine",
+        "url": "https://www.smashingmagazine.com/feed/",
+        "description": "Web design et développement",
+        "language": "en"
+      },
+      {
+        "title": "CSS-Tricks",
+        "url": "https://css-tricks.com/feed/",
+        "description": "CSS et front-end",
+        "language": "en"
+      },
+      {
+        "title": "Creative Bloq",
+        "url": "https://www.creativebloq.com/feeds/all",
+        "description": "Design graphique et web",
+        "language": "en"
+      }
+    ]
+  },
+  {
+    "name": "Développement",
+    "icon": "⚙️",
+    "feeds": [
+      {
+        "title": "Dev.to",
+        "url": "https://dev.to/feed",
+        "description": "Communauté de développeurs",
+        "language": "en"
+      },
+      {
+        "title": "Hacker News",
+        "url": "https://hnrss.org/frontpage",
+        "description": "Tech news pour développeurs",
+        "language": "en"
+      },
+      {
+        "title": "JavaScript Weekly",
+        "url": "https://javascriptweekly.com/rss/",
+        "description": "Actualités JavaScript",
+        "language": "en"
+      },
+      {
+        "title": "FreeCodeCamp",
+        "url": "https://www.freecodecamp.org/news/rss/",
+        "description": "Tutoriels et articles de code",
+        "language": "en"
+      }
+    ]
+  },
+  {
+    "name": "Crypto",
+    "icon": "₿",
+    "feeds": [
+      {
+        "title": "CoinDesk",
+        "url": "https://www.coindesk.com/arc/outboundfeeds/rss/",
+        "description": "Actualités crypto et blockchain",
+        "language": "en"
+      },
+      {
+        "title": "Cointelegraph",
+        "url": "https://cointelegraph.com/rss",
+        "description": "News blockchain",
+        "language": "en"
+      },
+      {
+        "title": "Journal du Coin",
+        "url": "https://journalducoin.com/feed/",
+        "description": "Actualités crypto françaises",
+        "language": "fr"
+      }
+    ]
+  },
+  {
+    "name": "IA",
+    "icon": "🤖",
+    "feeds": [
+      {
+        "title": "OpenAI News",
+        "url": "https://openai.com/news/rss.xml",
+        "description": "Actualités OpenAI",
+        "language": "en"
+      },
+      {
+        "title": "Hugging Face Blog",
+        "url": "https://huggingface.co/blog/feed.xml",
+        "description": "ML et NLP",
+        "language": "en"
+      },
+      {
+        "title": "Google AI Blog",
+        "url": "https://blog.research.google/atom.xml",
+        "description": "Recherche en IA",
+        "language": "en"
+      }
+    ]
+  },
+  {
+    "name": "Bons Plans",
+    "icon": "🎁",
+    "feeds": [
+      {
+        "title": "Dealabs",
+        "url": "https://www.dealabs.com/magazine/rss/news",
+        "description": "Bons plans et promotions",
+        "language": "fr"
+      },
+      {
+        "title": "Loot Scraper",
+        "url": "https://feed.eikowagenknecht.com/lootscraper.xml",
+        "description": "Jeux gratuits et Epic Games",
+        "language": "en"
+      }
+    ]
+  }
+]

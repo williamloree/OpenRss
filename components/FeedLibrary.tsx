@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { X, Plus, Check, Search, Trash2 } from "lucide-react";
 import { useRssFeeds } from "@/hooks/useRssFeeds";
-import { FeedLibraryItem } from "@/lib/db";
+import { FeedLibraryItem } from "@/lib/feeds-library";
 
 interface FeedLibraryProps {
   isOpen: boolean;
